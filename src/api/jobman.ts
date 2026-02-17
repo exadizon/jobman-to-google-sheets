@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export class JobManClient {
-  private client: AxiosInstance;
+  public client: AxiosInstance;
   private queue: PQueue;
-  private orgId: string;
+  public orgId: string;
   
   private contactCache: Map<string, any> = new Map();
   private typeCache: Map<string, string> = new Map();
@@ -30,11 +30,10 @@ export class JobManClient {
       },
     });
 
-    // Slowed down to 30/min to be extremely safe during deep dives
     this.queue = new PQueue({ intervalCap: 30, interval: 60000 });
   }
 
-  private async request<T>(config: any, retryCount = 0): Promise<T> {
+  public async request<T>(config: any, retryCount = 0): Promise<T> {
     return this.queue.add(async () => {
       try {
         const response = await this.client.request<T>(config);
@@ -42,12 +41,9 @@ export class JobManClient {
       } catch (error: any) {
         if (error.response?.status === 429 && retryCount < 3) {
             const waitTime = (error.response.headers['retry-after'] || 30) * 1000;
-            console.warn(`⚠️ Rate limited. Waiting ${waitTime/1000}s then retrying (Attempt ${retryCount + 1})...`);
+            console.warn(`⚠️ Rate limited. Waiting ${waitTime/1000}s then retrying...`);
             await new Promise(res => setTimeout(res, waitTime));
             return this.request(config, retryCount + 1);
-        }
-        if (error.response) {
-            console.error(`❌ API Error ${error.response.status} on ${config.url}`);
         }
         throw error;
       }
@@ -69,25 +65,40 @@ export class JobManClient {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/quotes`, params: { page, limit } });
   }
 
-  async getQuoteDetails(quoteId: string) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/quotes/${quoteId}` });
+  async getLeads(page = 1, limit = 50) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads`, params: { page, limit } });
   }
 
-  async getQuoteSectionsWithItems(quoteId: string) {
-    const response: any = await this.request({
-        method: 'GET',
-        url: `/organisations/${this.orgId}/quotes/${quoteId}/sections`,
-        params: { include: 'items' }
-    });
-    return response.quote_sections?.data || response.data || [];
+  async getLeadDetails(leadId: string) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}` });
   }
 
-  async getQuoteItemComponents(quoteId: string, itemId: string) {
-      const response: any = await this.request({
-          method: 'GET',
-          url: `/organisations/${this.orgId}/quotes/${quoteId}/items/${itemId}/components`
-      });
-      return response.quote_section_item_components?.data || response.data || [];
+  async getJobs(page = 1, limit = 50) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs`, params: { page, limit } });
+  }
+
+  async getJobDetails(jobId: string) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}` });
+  }
+
+  async getInvoices(page = 1, limit = 50) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices`, params: { page, limit } });
+  }
+
+  async getInvoiceDetails(invoiceId: string) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices/${invoiceId}` });
+  }
+
+  async getInvoicePayments(invoiceId: string) {
+    try {
+        const response: any = await this.request({ 
+            method: 'GET', 
+            url: `/organisations/${this.orgId}/invoices/${invoiceId}/payments` 
+        });
+        return response.data || response.invoice_payments || [];
+    } catch (e) {
+        return [];
+    }
   }
 
   async getContactWithDetails(contactId: string) {
