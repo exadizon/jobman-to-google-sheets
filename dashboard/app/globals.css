@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light only;
+  --background: #f6f7f6;
+  --foreground: #1c1917;
+  --muted: #78716c;
+  --border: #dfe3e0;
+  --surface: #ffffff;
+  --brand: #454E49;
+  --brand-light: #5c665f;
+  --brand-lighter: #e8ebe9;
+  --brand-subtle: #f0f2f0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+/* Brand-colored checkboxes */
+input[type="checkbox"]:checked {
+  accent-color: var(--brand);
 }
