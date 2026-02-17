@@ -13,37 +13,40 @@ export function formatDate(dateString: string) {
 export async function syncQuotes(client: JobManClient) {
   console.log('--- Syncing Quotes ---');
   
+  // Warm up the caches first
+  await client.initializeLookups();
+  
   const response: any = await client.getQuotes(1, 5); 
   const quotes = response.quotes?.data || [];
-  
-  if (quotes.length > 0) {
-      console.log('DEBUG: First Quote Object Keys:', Object.keys(quotes[0]));
-      // Check for specific fields the user mentioned
-      console.log('DEBUG: Sample Quote Financials:', {
-          total_cost: quotes[0].total_cost,
-          profit: quotes[0].profit,
-          profit_percent: quotes[0].profit_percent,
-          status: quotes[0].status?.name
-      });
-  }
-
   const processedQuotes = [];
 
   for (const quote of quotes) {
     console.log(`Processing Quote: ${quote.number || quote.quote_number}`);
     
+    // 1. Fetch Contact Details using the new cache/lookup system
+    let contactName = 'Unknown';
+    let contactType = '';
+    let contactSource = '';
+    
+    if (quote.contact_id) {
+        try {
+            const contact = await client.getContactWithDetails(quote.contact_id);
+            contactName = contact.name;
+            contactType = contact.type;
+            contactSource = contact.source;
+        } catch (e) {
+            console.warn(`Could not resolve contact ${quote.contact_id}`);
+        }
+    }
+
+    // 2. Fetch costs from details
     let fullQuote: any = {};
     try {
         fullQuote = await client.getQuoteDetails(quote.id);
     } catch (e) {
-        console.warn(`Could not fetch details for quote ${quote.id}`);
+        // ...
     }
 
-    const contactObj = quote.contact || fullQuote.contact;
-    let contactName = contactObj?.name || contactObj?.display_name || 'Unknown';
-    let contactType = contactObj?.contact_type?.name || '';
-
-    // Simple aggregate for now - we'll refine material/labour later
     const costs = { material: 0, labour: 0, service: 0, appliance: 0, overhead: 0, wastage: 0 };
     const sections = fullQuote.sections || [];
     for (const section of sections) {
@@ -62,27 +65,28 @@ export async function syncQuotes(client: JobManClient) {
     }
 
     processedQuotes.push({
-      'Number': quote.number || '',
+      'Number': quote.number || quote.quote_number || '',
       'Description': quote.description || '',
       'Contact': contactName,
       'Contact Type': contactType,
-      'Contact Source': quote.contact_source?.name || '',
-      'Status': quote.quote_status_name || '', 
+      'Contact Source': contactSource,
+      'Status': quote.status?.name || '',
+      'Date': formatDate(quote.date),
       'Expiry Date': formatDate(quote.expiry_date),
-      'Cost': quote.cost || 0,
+      'Cost': quote.total_cost || 0,
       'Material Cost': costs.material,
       'Labour Cost': costs.labour,
       'Service Cost': costs.service,
       'Appliance Cost': costs.appliance,
-      'Overhead': quote.overhead,
-      'Wastage': quote.wastage,
+      'Overhead': costs.overhead,
+      'Wastage': costs.wastage,
       'Discount': quote.discount_amount || 0,
       'Discount %': quote.discount_percent ? `${quote.discount_percent}%` : '0%',
       'Subtotal': quote.subtotal || 0,
-      'Tax': quote.tax || 0,
+      'Tax': quote.tax_total || 0,
       'Total': quote.total || 0,
-      'Net Profit': quote.profit || 0, // profit -> Net Profit
-      'Net Profit %': quote.profit_percent ? `${quote.profit_percent}%` : '0%', // profit_percent -> Net Profit %
+      'Net Profit': quote.profit || 0,
+      'Net Profit %': quote.profit_percent ? `${quote.profit_percent}%` : '0%',
       'Created': formatDate(quote.created_at),
       'Updated': formatDate(quote.updated_at),
       'Jobman job no. / other comments': quote.job_number || '',
