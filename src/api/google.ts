@@ -38,10 +38,25 @@ export class GoogleSheetsClient {
         return;
     }
 
+    // 1. Clear the sheet first to remove old data
     await sheet.clear();
-    
+
+    // 2. Set Row 1: "Date Exported: DD/MM/YYYY"
+    const today = new Date().toLocaleDateString('en-GB'); // Formats as DD/MM/YYYY
+    await sheet.loadCells('A1:B1');
+    const cell = sheet.getCell(0, 0); // A1
+    cell.value = `Date Exported: ${today}`;
+    await sheet.saveUpdatedCells();
+
     if (data.length > 0) {
-      await sheet.setHeaderRow(Object.keys(data[0]));
+      // 3. Set Headers on Row 2
+      const headers = Object.keys(data[0]);
+      
+      // We use a lower-level method to ensure headers land on Row 2
+      // index 1 = Row 2
+      await sheet.setHeaderRow(headers, 2); 
+      
+      // 4. Add the data rows (these will naturally start from Row 3 now)
       await sheet.addRows(data);
     }
     

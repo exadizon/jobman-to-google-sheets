@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "diagnose": "tsx src/test-connection.ts"
+    "diagnose": "tsx src/test-connection.ts",
+    "start": "tsx src/index.ts"
   },
   "repository": {
     "type": "git",
