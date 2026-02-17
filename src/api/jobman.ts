@@ -39,6 +39,10 @@ export class JobManClient {
         const response = await this.client.request<T>(config);
         return response.data;
       } catch (error: any) {
+        // Detailed error for debugging
+        if (error.response) {
+            console.error(`DEBUG: API Error ${error.response.status} on ${config.url}`);
+        }
         throw error;
       }
     }) as Promise<T>;
@@ -47,20 +51,18 @@ export class JobManClient {
   async initializeLookups() {
     console.log('🔄 Loading Contact Types and Sources into cache...');
     
-    // Correcting to /contacts/types
     const types: any = await this.request({ 
       method: 'GET', 
       url: `/organisations/${this.orgId}/contacts/types` 
     });
-    const typeList = types.data || types.contact_types?.data || [];
+    const typeList = types.data || types.contact_types?.data || types.contact_types || [];
     typeList.forEach((t: any) => this.typeCache.set(t.id, t.name));
 
-    // Correcting to /contacts/sources
     const sources: any = await this.request({ 
       method: 'GET', 
       url: `/organisations/${this.orgId}/contacts/sources` 
     });
-    const sourceList = sources.data || sources.contact_sources?.data || [];
+    const sourceList = sources.data || sources.contact_sources?.data || sources.contact_sources || [];
     sourceList.forEach((s: any) => this.sourceCache.set(s.id, s.name));
     
     console.log(`✅ Cached ${this.typeCache.size} types and ${this.sourceCache.size} sources.`);
@@ -91,19 +93,24 @@ export class JobManClient {
       url: `/organisations/${this.orgId}/contacts/${contactId}`,
     });
     
+    // The response for a single contact might be { contact: { ... } } or { data: { ... } }
     const contact = response.data || response.contact || response;
     
+    // DEBUG: Look for source ID field
+    // console.log(`DEBUG: Contact ${contactId} data:`, JSON.stringify(contact).substring(0, 300));
+
     const detailedContact = {
         name: contact.name || contact.display_name || 'Unknown',
         type: this.typeCache.get(contact.contact_type_id) || '',
-        source: this.sourceCache.get(contact.contact_source_id) || ''
+        source: this.sourceCache.get(contact.contact_source_id) || 
+                this.sourceCache.get(contact.source_id) || 
+                this.sourceCache.get(contact.contact_source?.id) || ''
     };
     
     this.contactCache.set(contactId, detailedContact);
     return detailedContact;
   }
 
-  // Adding getters for Leads, Jobs, Invoices for later use
   async getLeads(page = 1, limit = 50) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads`, params: { page, limit } });
   }
