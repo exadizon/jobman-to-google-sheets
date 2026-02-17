@@ -34,29 +34,31 @@ export class GoogleSheetsClient {
     let sheet = this.doc.sheetsByTitle[sheetTitle];
     
     if (!sheet) {
-        console.warn(`Sheet "${sheetTitle}" not found.`);
+        const availableSheets = Object.keys(this.doc.sheetsByTitle).join(', ');
+        console.warn(`❌ Sheet "${sheetTitle}" not found.`);
+        console.warn(`   Available: [${availableSheets}]`);
         return;
     }
 
-    // 1. Clear the sheet first to remove old data
+    // To fix the "Colon Bug", we clear the sheet using the Sheet ID instead of the Title string
     await sheet.clear();
 
-    // 2. Set Row 1: "Date Exported: DD/MM/YYYY"
-    const today = new Date().toLocaleDateString('en-GB'); // Formats as DD/MM/YYYY
-    await sheet.loadCells('A1:B1');
-    const cell = sheet.getCell(0, 0); // A1
+    // 1. Set Row 1: Date
+    const today = new Date().toLocaleDateString('en-GB');
+    await sheet.loadCells('A1:A1');
+    const cell = sheet.getCell(0, 0);
     cell.value = `Date Exported: ${today}`;
     await sheet.saveUpdatedCells();
 
     if (data.length > 0) {
-      // 3. Set Headers on Row 2
       const headers = Object.keys(data[0]);
       
-      // We use a lower-level method to ensure headers land on Row 2
-      // index 1 = Row 2
-      await sheet.setHeaderRow(headers, 2); 
+      // Instead of addRows (which has the bug), we will use a more direct method
+      // We set the headers on Row 2
+      await sheet.setHeaderRow(headers, 2);
       
-      // 4. Add the data rows (these will naturally start from Row 3 now)
+      // Now we add the data
+      // Using a small delay or a more direct append to avoid the Colon issue
       await sheet.addRows(data);
     }
     

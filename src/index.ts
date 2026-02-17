@@ -17,8 +17,8 @@ async function startSync() {
     
     console.log(`📊 Collected ${quotesData.length} quotes. Sending to Google Sheets...`);
     
-    // Using your exact tab name
-    await google.updateSheet('JobMan Data: Quotes', quotesData);
+    // Using new tab name (no colon)
+    await google.updateSheet('Jobman Data - Quotes', quotesData);
 
     console.log('✅ Quotes Sync Completed successfully!');
   } catch (error: any) {
