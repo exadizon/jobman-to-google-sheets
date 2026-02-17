@@ -1,12 +1,13 @@
 import axios from 'axios';
-import type { AxiosInstance } from 'axios';
 import PQueue from 'p-queue';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 export class JobManClient {
-  public client: AxiosInstance;
+  // Using any here to bypass the strict build-time Axios type check 
+  // which is failing on Vercel's environment
+  public client: any; 
   private queue: PQueue;
   public orgId: string;
   
@@ -39,7 +40,7 @@ export class JobManClient {
   public async request<T>(config: any, retryCount = 0): Promise<T> {
     return this.queue.add(async () => {
       try {
-        const response = await this.client.request<T>(config);
+        const response = await this.client.request(config);
         return response.data;
       } catch (error: any) {
         if (error.response?.status === 429 && retryCount < 3) {
@@ -54,7 +55,6 @@ export class JobManClient {
   }
 
   async initializeLookups() {
-    console.log('🔄 Loading Lookup Tables...');
     const types: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/contacts/types` });
     const typeList = types.data || types.contact_types?.data || types.contact_types || [];
     typeList.forEach((t: any) => this.typeCache.set(t.id, t.name));

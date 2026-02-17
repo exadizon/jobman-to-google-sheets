@@ -57,7 +57,7 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
       'Status': quote.quote_status_name || '',
       'Date': formatDate(quote.date),
       'Expiry Date': formatDate(quote.expiry_date),
-      'Cost': quote.total_cost || 0,
+      'Cost': quote.cost || 0,
       'Material Cost': 0, // Set to 0 since we removed the deep dive
       'Labour Cost': 0,
       'Service Cost': 0,
