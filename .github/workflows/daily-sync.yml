@@ -2,9 +2,8 @@ name: Daily JobMan Sync
 
 on:
   schedule:
-    # This runs at 02:00 AM UTC every day
-    # (Adjust to your time zone - 3 PM NZDT would be 02:00 UTC)
-    - cron: '0 2 * * *'
+    # 4:00 AM UTC is 5:00 PM NZDT (Daylight Saving)
+    - cron: '0 4 * * *'
   workflow_dispatch: # Allows you to run it manually from GitHub UI
 
 jobs:

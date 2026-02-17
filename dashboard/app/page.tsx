@@ -221,7 +221,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between">
                     <span>Next Run</span>
-                    <span className="font-medium text-stone-700">3:00 PM</span>
+                    <span className="font-medium text-stone-700">5:00 PM</span>
                   </div>
                 </div>
               </div>
