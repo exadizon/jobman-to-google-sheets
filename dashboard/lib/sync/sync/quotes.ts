@@ -10,22 +10,27 @@ export function formatDate(dateString: string) {
   return `${mm}/${dd}/${yyyy}`;
 }
 
-export async function syncQuotes(client: JobManClient) {
-  console.log('--- Starting Full Quotes Sync ---');
+export async function syncQuotes(client: JobManClient, limit: number | null = null) {
+  console.log('--- Starting Quotes Sync ---');
   await client.initializeLookups();
   
   let allQuotes: any[] = [];
   let currentPage = 1;
   let hasMore = true;
 
-  // 1. Fetch ALL pages of quotes
+  // 1. Fetch pages
   while (hasMore) {
     console.log(`Fetching page ${currentPage}...`);
-    const response: any = await client.getQuotes(currentPage, 50);
+    const response: any = await client.getQuotes(currentPage, limit ? Math.min(limit, 50) : 50);
     const quotes = response.quotes?.data || [];
     allQuotes = allQuotes.concat(quotes);
     
-    // Check if there are more pages
+    if (limit && allQuotes.length >= limit) {
+        allQuotes = allQuotes.slice(0, limit);
+        hasMore = false;
+        break;
+    }
+
     const meta = response.quotes?.meta || response.meta;
     if (meta && currentPage < meta.last_page) {
         currentPage++;

@@ -10,6 +10,7 @@ export default function Home() {
     jobs: true,
     invoices: true,
   });
+  const [isTestMode, setIsTestMode] = useState(true);
   const logContainerRef = useRef<HTMLDivElement>(null);
 
   const toggle = (key: keyof typeof selected) => {
@@ -24,7 +25,7 @@ export default function Home() {
       const response = await fetch('/api/sync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selected),
+        body: JSON.stringify({ ...selected, limit: isTestMode ? 5 : null }),
       });
 
       if (!response.body) throw new Error('No response body');
@@ -89,6 +90,40 @@ export default function Home() {
                                 />
                             </label>
                         ))}
+                    </div>
+                </div>
+
+                <div className="bg-orange-50 p-4 rounded-lg border border-orange-100">
+                    <h3 className="text-sm font-semibold text-orange-600 uppercase tracking-wide mb-2 flex items-center gap-2">
+                        Settings
+                    </h3>
+                    <label className="flex items-center justify-between p-2 cursor-pointer">
+                        <span className="text-sm font-medium text-orange-800">Test Mode (Limit 5)</span>
+                        <input 
+                            type="checkbox" 
+                            checked={isTestMode} 
+                            onChange={() => setIsTestMode(!isTestMode)}
+                            className="w-4 h-4 text-orange-600 rounded border-orange-300 focus:ring-orange-500"
+                            disabled={isRunning}
+                        />
+                    </label>
+                </div>
+
+                <div className="bg-purple-50 p-4 rounded-lg border border-purple-100 text-purple-800">
+                    <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wide mb-2">Automation</h3>
+                    <div className="text-sm space-y-2">
+                        <p className="flex justify-between font-medium">
+                            <span>Status:</span>
+                            <span className="text-purple-600">Active (Cron)</span>
+                        </p>
+                        <p className="flex justify-between">
+                            <span>Frequency:</span>
+                            <span>Daily</span>
+                        </p>
+                        <p className="flex justify-between">
+                            <span>Next Run:</span>
+                            <span className="font-bold underline italic">3:00 PM</span>
+                        </p>
                     </div>
                 </div>
 

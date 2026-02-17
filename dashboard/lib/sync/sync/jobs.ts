@@ -1,8 +1,8 @@
 import { JobManClient } from '../api/jobman';
 
-export async function syncJobs(client: JobManClient) {
+export async function syncJobs(client: JobManClient, limit: number | null = null) {
   console.log('--- Syncing Jobs ---');
-  const response = await client.getJobs(1, 100);
+  const response = await client.getJobs(1, limit || 50);
   const jobs = response.data || [];
   const processed = [];
 

@@ -1,0 +1,33 @@
+name: Daily JobMan Sync
+
+on:
+  schedule:
+    # This runs at 02:00 AM UTC every day
+    # (Adjust to your time zone - 3 PM NZDT would be 02:00 UTC)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allows you to run it manually from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install dependencies
+        run: cd dashboard && npm install
+
+      - name: Run Sync
+        run: cd dashboard && npm run sync-all
+        env:
+          JOBMAN_API_KEY: ${{ secrets.JOBMAN_API_KEY }}
+          JOBMAN_ORG_ID: ${{ secrets.JOBMAN_ORG_ID }}
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }}
+          GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}

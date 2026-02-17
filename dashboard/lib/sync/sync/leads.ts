@@ -1,12 +1,11 @@
 import { JobManClient } from '../api/jobman';
 import { formatDate } from './quotes';
 
-export async function syncLeads(client: JobManClient) {
-  console.log('--- Starting Leads Sync (Test Limit: 5) ---');
+export async function syncLeads(client: JobManClient, limit: number | null = null) {
+  console.log('--- Starting Leads Sync ---');
   await client.initializeLookups();
   
-  // Fetching first 5 for testing as requested
-  const response: any = await client.getLeads(1, 5); 
+  const response: any = await client.getLeads(1, limit || 50); 
   const leads = response.leads?.data || [];
   
   const processedLeads = [];

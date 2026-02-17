@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   const encoder = new TextEncoder();
   const body = await req.json();
-  const { quotes, leads, jobs, invoices } = body;
+  const { quotes, leads, jobs, invoices, limit } = body;
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -29,35 +29,34 @@ export async function POST(req: Request) {
       console.error = (...args) => log(`❌ ${args.map(String).join(' ')}`);
 
       try {
-        log('🚀 Initializing Sync...');
+        log(`🚀 Initializing Sync ${limit ? `(Limit: ${limit})` : '(Full)'}...`);
         const jobman = new JobManClient();
         const google = new GoogleSheetsClient();
 
         if (quotes) {
             log('--- Starting Quotes Sync ---');
-            const data = await syncQuotes(jobman);
+            const data = await syncQuotes(jobman, limit);
             log(`📊 Quotes: Collected ${data.length}. Updating Google Sheets...`);
             await google.updateSheet('Jobman Data - Quotes', data);
         }
 
         if (leads) {
             log('--- Starting Leads Sync ---');
-            const data = await syncLeads(jobman);
+            const data = await syncLeads(jobman, limit);
             log(`📊 Leads: Collected ${data.length}. Updating Google Sheets...`);
             await google.updateSheet('Jobman Data - Leads', data);
         }
 
         if (jobs) {
             log('--- Starting Jobs Sync ---');
-            const data = await syncJobs(jobman);
+            const data = await syncJobs(jobman, limit);
             log(`📊 Jobs: Collected ${data.length}. Updating Google Sheets...`);
-            // Assuming tab name is standardized
             await google.updateSheet('Jobman Data - Jobs', data);
         }
 
         if (invoices) {
             log('--- Starting Invoices Sync ---');
-            const data = await syncInvoices(jobman);
+            const data = await syncInvoices(jobman, limit);
             log(`📊 Invoices: Collected ${data.length}. Updating Google Sheets...`);
             await google.updateSheet('Jobman Data - Invoices', data);
         }

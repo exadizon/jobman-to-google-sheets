@@ -1,10 +1,10 @@
 import { JobManClient } from '../api/jobman';
 import { formatDate } from './quotes';
 
-export async function syncInvoices(client: JobManClient) {
-  console.log('--- Starting Invoices Sync (Restoring Financials + Hunting Quote) ---');
+export async function syncInvoices(client: JobManClient, limit: number | null = null) {
+  console.log('--- Starting Invoices Sync ---');
   
-  const response: any = await client.getInvoices(1, 5); 
+  const response: any = await client.getInvoices(1, limit || 50); 
   const invoices = response.invoices?.data || [];
   const processed = [];
 
