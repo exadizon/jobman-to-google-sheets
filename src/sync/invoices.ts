@@ -2,11 +2,10 @@ import { JobManClient } from '../api/jobman.js';
 import { formatDate } from './quotes.js';
 
 export async function syncInvoices(client: JobManClient) {
-  console.log('--- Starting Invoices Sync (Linked Resource Lookup) ---');
+  console.log('--- Starting Invoices Sync (Restoring Financials + Hunting Quote) ---');
   
   const response: any = await client.getInvoices(1, 5); 
   const invoices = response.invoices?.data || [];
-  
   const processed = [];
 
   for (const inv of invoices) {
@@ -14,30 +13,42 @@ export async function syncInvoices(client: JobManClient) {
 
     let details: any = {};
     let quoteNumber = '';
+    let leadNumber = '';
+    let jobNumber = '';
     let amountPaid = 0;
 
     try {
-        // 1. Fetch Invoice Details
+        // 1. Restore Financials
         const detailsResponse = await client.getInvoiceDetails(inv.id);
         details = detailsResponse.invoice || detailsResponse.data || detailsResponse;
 
-        // 2. Fetch Payments to calculate Amount Paid
         const payments = await client.getInvoicePayments(inv.id);
         amountPaid = payments.reduce((sum: number, p: any) => sum + (Number(p.amount) || 0), 0);
 
-        // 3. Resolve "Quote" Column from Lead or Job
+        // 2. Resolve Numbers for Lead/Job/Quote
         if (inv.job_id) {
-            const job = await client.getJobDetails(inv.job_id);
-            const jobData = job.data || job.job || job;
-            // Often the Quote Number is stored on the Job as 'quote_number' or it IS the job number
-            quoteNumber = jobData.quote_number || jobData.number || '';
-        } else if (inv.lead_id) {
-            const lead = await client.getLeadDetails(inv.lead_id);
-            const leadData = lead.data || lead.lead || lead;
-            quoteNumber = leadData.quote_number || leadData.number || '';
+            const jobData = await client.getJobDetails(inv.job_id);
+            jobNumber = jobData.number || '';
+            
+            // Look for Quote Number inside Job
+            quoteNumber = jobData.quote_number || (jobData.quote ? jobData.quote.number : '');
+            
+            // DEEP DEBUG (Only for first one)
+            if (processed.length === 0) {
+                console.log('--- DEBUG JOB STRUCTURE ---');
+                console.log('Job Keys:', Object.keys(jobData));
+                if (jobData.quotes) console.log('Job has quotes array:', jobData.quotes.length);
+            }
         }
 
-        // Fallback to reference if still empty
+        if (inv.lead_id) {
+            const leadData = await client.getLeadDetails(inv.lead_id);
+            leadNumber = leadData.number || '';
+            if (!quoteNumber) {
+                quoteNumber = leadData.quote_number || (leadData.quote ? leadData.quote.number : '');
+            }
+        }
+
         if (!quoteNumber) quoteNumber = inv.reference || '';
 
     } catch (e) {
@@ -60,8 +71,8 @@ export async function syncInvoices(client: JobManClient) {
       'Total': total,
       'Amount Paid': amountPaid,
       'Amount Due': Math.max(0, total - amountPaid),
-      'Lead': inv.lead_id || '',
-      'Job': inv.job_id || '',
+      'Lead': leadNumber,
+      'Job': jobNumber,
       'Project': inv.project_id || '',
       'Created': formatDate(inv.created_at),
       'Updated': formatDate(inv.updated_at),

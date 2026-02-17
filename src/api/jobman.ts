@@ -12,6 +12,8 @@ export class JobManClient {
   private contactCache: Map<string, any> = new Map();
   private typeCache: Map<string, string> = new Map();
   private sourceCache: Map<string, string> = new Map();
+  private leadCache: Map<string, any> = new Map();
+  private jobCache: Map<string, any> = new Map();
 
   constructor() {
     const apiKey = process.env.JOBMAN_API_KEY;
@@ -41,7 +43,7 @@ export class JobManClient {
       } catch (error: any) {
         if (error.response?.status === 429 && retryCount < 3) {
             const waitTime = (error.response.headers['retry-after'] || 30) * 1000;
-            console.warn(`⚠️ Rate limited. Waiting ${waitTime/1000}s then retrying...`);
+            console.warn(`⚠️ Rate limited. Waiting ${waitTime/1000}s...`);
             await new Promise(res => setTimeout(res, waitTime));
             return this.request(config, retryCount + 1);
         }
@@ -51,7 +53,7 @@ export class JobManClient {
   }
 
   async initializeLookups() {
-    console.log('🔄 Loading Contact Types and Sources into cache...');
+    console.log('🔄 Loading Lookup Tables...');
     const types: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/contacts/types` });
     const typeList = types.data || types.contact_types?.data || types.contact_types || [];
     typeList.forEach((t: any) => this.typeCache.set(t.id, t.name));
@@ -64,41 +66,39 @@ export class JobManClient {
   async getQuotes(page = 1, limit = 50) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/quotes`, params: { page, limit } });
   }
-
   async getLeads(page = 1, limit = 50) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads`, params: { page, limit } });
   }
-
-  async getLeadDetails(leadId: string) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}` });
-  }
-
   async getJobs(page = 1, limit = 50) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs`, params: { page, limit } });
   }
-
-  async getJobDetails(jobId: string) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}` });
-  }
-
   async getInvoices(page = 1, limit = 50) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices`, params: { page, limit } });
   }
-
   async getInvoiceDetails(invoiceId: string) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices/${invoiceId}` });
   }
-
   async getInvoicePayments(invoiceId: string) {
     try {
-        const response: any = await this.request({ 
-            method: 'GET', 
-            url: `/organisations/${this.orgId}/invoices/${invoiceId}/payments` 
-        });
+        const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/invoices/${invoiceId}/payments` });
         return response.data || response.invoice_payments || [];
-    } catch (e) {
-        return [];
-    }
+    } catch (e) { return []; }
+  }
+
+  async getLeadDetails(leadId: string) {
+    if (this.leadCache.has(leadId)) return this.leadCache.get(leadId);
+    const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}` });
+    const data = response.data || response.lead || response;
+    this.leadCache.set(leadId, data);
+    return data;
+  }
+
+  async getJobDetails(jobId: string) {
+    if (this.jobCache.has(jobId)) return this.jobCache.get(jobId);
+    const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}` });
+    const data = response.data || response.job || response;
+    this.jobCache.set(jobId, data);
+    return data;
   }
 
   async getContactWithDetails(contactId: string) {
@@ -109,12 +109,10 @@ export class JobManClient {
         const detailedContact = {
             name: contact.name || contact.display_name || 'Unknown',
             type: this.typeCache.get(contact.contact_type_id) || '',
-            source: this.sourceCache.get(contact.contact_source_id) || this.sourceCache.get(contact.source_id) || ''
+            source: this.sourceCache.get(contact.contact_source_id) || ''
         };
         this.contactCache.set(contactId, detailedContact);
         return detailedContact;
-    } catch (e) {
-        return { name: 'Unknown', type: '', source: '' };
-    }
+    } catch (e) { return { name: 'Unknown', type: '', source: '' }; }
   }
 }
