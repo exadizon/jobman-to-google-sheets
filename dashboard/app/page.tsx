@@ -65,7 +65,10 @@ export default function Home() {
         if (done) break;
         
         const text = decoder.decode(value);
-        const newLogs = text.split('\n').filter(line => line.trim());
+        const newLogs = text.split('\n').filter(line => line.trim()).map(msg => {
+          const time = new Date().toLocaleTimeString();
+          return `[${time}] ${msg}`;
+        });
         setLogs(prev => [...prev, ...newLogs]);
 
         if (logContainerRef.current) {

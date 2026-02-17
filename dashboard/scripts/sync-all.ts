@@ -8,36 +8,42 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Add helper for timestamps
+const log = (msg: string) => {
+    const time = new Date().toLocaleTimeString('en-GB', { timeZone: 'Pacific/Auckland' });
+    console.log(`[${time}] ${msg}`);
+};
+
 async function runFullAutomation() {
-  console.log('🚀 STARTING DAILY AUTOMATION');
+  log('🚀 STARTING DAILY AUTOMATION');
   
   const jobman = new JobManClient();
   const google = new GoogleSheetsClient();
 
   try {
     // 1. Quotes
-    console.log('--- Quotes ---');
-    const quotes = await syncQuotes(jobman, null); // null = Full Sync
+    log('--- Quotes ---');
+    const quotes = await syncQuotes(jobman, null);
     await google.updateSheet('Jobman Data - Quotes', quotes);
 
     // 2. Leads
-    console.log('--- Leads ---');
+    log('--- Leads ---');
     const leads = await syncLeads(jobman, null);
     await google.updateSheet('Jobman Data - Leads', leads);
 
     // 3. Jobs
-    console.log('--- Jobs ---');
+    log('--- Jobs ---');
     const jobs = await syncJobs(jobman, null);
     await google.updateSheet('Jobman Data - Jobs', jobs);
 
     // 4. Invoices
-    console.log('--- Invoices ---');
+    log('--- Invoices ---');
     const invoices = await syncInvoices(jobman, null);
     await google.updateSheet('Jobman Data - Invoices', invoices);
 
-    console.log('🎉 AUTOMATION FINISHED SUCCESSFULLY');
+    log('🎉 AUTOMATION FINISHED SUCCESSFULLY');
   } catch (error: any) {
-    console.error('❌ AUTOMATION FAILED:', error.message);
+    log(`❌ AUTOMATION FAILED: ${error.message}`);
     process.exit(1);
   }
 }

@@ -9,6 +9,9 @@ import { syncInvoices } from '@/lib/sync/sync/invoices';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  // Suppress the url.parse warning from appearing in your UI
+  process.removeAllListeners('warning');
+  
   const encoder = new TextEncoder();
   const body = await req.json();
   const { quotes, leads, jobs, invoices, limit } = body;
@@ -20,7 +23,7 @@ export async function POST(req: Request) {
       const originalError = console.error;
 
       const log = (msg: string) => {
-        const text = `[${new Date().toLocaleTimeString()}] ${msg}\n`;
+        const text = `${msg}\n`;
         controller.enqueue(encoder.encode(text));
       };
 
