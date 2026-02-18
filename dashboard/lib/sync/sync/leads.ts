@@ -22,27 +22,55 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
         person = await client.getContactPerson(lead.contact_id, lead.contact_person_id);
     }
 
-    // Resolve Members
-    const members = await client.getLeadMembers(lead.id);
-    const memberNames = members.map((m: any) => `${m.first_name} ${m.last_name}`.trim()).join(', ');
+    // Resolve Members and Roles via Tasks (similar to Jobs)
+    let members: any[] = [];
     
-    // Helper to find member by role (simple heuristic or if role is available in member object use that)
-    // Assuming member object has 'role' or similar, but for now we just list them all or filter if we knew role IDs.
-    // Since we don't know exact role IDs/Names mapping from member object without seeing it, 
-    // we will map specific roles if the member list effectively contains them, otherwise leave blank or use a heuristic.
-    // For now, based on the prompt, it seems the user wants to split them if possible. 
-    // Without specific role data in member response (which we haven't seen fully), we will just use the full list for 'Members' column
-    // and attempt to map if we can identify them. 
-    // *Correction*: The prompt shows columns '01_Sales Person', '02_Designer', etc. 
-    // If we can't distinguish, we'll leave specific columns blank or put all in Members.
-    // Let's assume for now we just populate 'Members' column fully. 
-    // If the user wants specific columns populated, we'd need to know how to identify a 'Designer' vs 'Sales Person' from the member object.
-    // I will populate the 'Members' column as requested.
+    try {
+        // Try to fetch tasks for the lead. Endpoint might be /leads/{id}/tasks or similar. 
+        // Assuming standard pattern:
+        let tasksData = [];
+        try {
+             const tasksResponse: any = await client.request({ method: 'GET', url: `/organisations/${client.orgId}/leads/${lead.id}/tasks` });
+             tasksData = tasksResponse.tasks?.data || tasksResponse.data || tasksResponse.tasks || [];
+        } catch(e) { 
+             console.log(`No tasks found for lead ${lead.number}, falling back to direct members.`);
+        }
 
-    // Calculate Progress based on status (heuristic)
-    // If status is 'Sales', progress might be different than 'Job Awarded'. 
-    // For now, we'll map Status to Progress if it makes sense, or leave blank if no direct mapping.
-    // The sheet shows '0' for progress in examples. I will default to '0' or empty.
+        if (Array.isArray(tasksData) && tasksData.length > 0) {
+            const allMembers = tasksData.flatMap((t: any) => t.members || []);
+            const seenMembers = new Set();
+            for (const m of allMembers) {
+                const memberId = m.staff_id || m.id;
+                if (memberId && !seenMembers.has(memberId)) {
+                    seenMembers.add(memberId);
+                    const fullStaff = await client.getStaffMember(memberId);
+                    members.push({ ...m, ...fullStaff }); 
+                }
+            }
+        } else {
+            // Fallback to direct members if no tasks or tasks endpoint fails
+             const directMembers = await client.getLeadMembers(lead.id);
+             for (const m of directMembers) {
+                 const memberId = m.staff_id || m.id;
+                 if (memberId) {
+                     const fullStaff = await client.getStaffMember(memberId);
+                     members.push({ ...m, ...fullStaff });
+                 }
+             }
+        }
+    } catch (e) {
+        console.error(`Failed to fetch members for lead ${lead.id}`, e);
+    }
+
+    const memberNames = members.map((m: any) => m.name).join(', ');
+    
+    // Role Mapping Helper
+    const getMemberByRole = (roleKeyword: string) => {
+        return members
+            .filter((m: any) => m.role && m.role.toLowerCase().includes(roleKeyword.toLowerCase()))
+            .map((m: any) => m.name)
+            .join(', ');
+    };
 
     // Map Lead Types array to string
     const leadTypes = (lead.types || []).map((t: any) => t.name).join(', ');
@@ -60,8 +88,8 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
       'Person Email': person.email,
       'Person Phone': person.phone,
       'Person Mobile': person.mobile,
-      'Project': lead.description || '', // Mapping Description to Project as fallback
-      'Progress': '0', // Defaulting to 0 as seen in examples
+      'Project': lead.description || '', 
+      'Progress': '0', 
       'Site Address': lead.address || '',
       'Site Address Line 1': lead.address_line1 || '',
       'Site Address Line 2': lead.address_line2 || '',
@@ -78,10 +106,10 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
       'Any must-haves or non-negotiables?': lead.detail_14 || '',
       'If we come back with a design and price that fits this, are you happy to move forward?': '',
       'Comments on approval probability estimate': '',
-      '01_Sales Person': '', // Needs role logic to populate specific columns
-      '02_Designer': '',
-      '03_Accounts Person': '',
-      '04_ Design Manager': '',
+      '01_Sales Person': getMemberByRole('Sales'),
+      '02_Designer': getMemberByRole('Design'),
+      '03_Accounts Person': getMemberByRole('Account'),
+      '04_ Design Manager': getMemberByRole('Design Manager'),
       'Created': formatDate(lead.created_at),
       'Updated': formatDate(lead.updated_at),
       'leads': 'TRUE'
