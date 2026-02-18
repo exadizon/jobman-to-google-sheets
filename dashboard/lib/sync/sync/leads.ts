@@ -114,7 +114,7 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
       '04_ Design Manager': getMemberByRole('Design Manager'),
       'Created': formatDate(lead.created_at),
       'Updated': formatDate(lead.updated_at),
-      'leads': 'TRUE'
+      
     });
   }
 
