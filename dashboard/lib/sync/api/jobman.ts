@@ -12,6 +12,7 @@ export class JobManClient {
   public orgId: string;
   
   private contactCache: Map<string, any> = new Map();
+  private staffCache: Map<string, any> = new Map();
   private typeCache: Map<string, string> = new Map();
   private sourceCache: Map<string, string> = new Map();
   private leadCache: Map<string, any> = new Map();
@@ -110,11 +111,14 @@ export class JobManClient {
         const detailedContact = {
             name: contact.name || contact.display_name || 'Unknown',
             type: this.typeCache.get(contact.contact_type_id) || '',
-            source: this.sourceCache.get(contact.contact_source_id) || ''
+            source: this.sourceCache.get(contact.contact_source_id) || '',
+            email: contact.email || '',
+            phone: contact.phone || '',
+            mobile: contact.mobile || ''
         };
         this.contactCache.set(contactId, detailedContact);
         return detailedContact;
-    } catch (e) { return { name: 'Unknown', type: '', source: '' }; }
+    } catch (e) { return { name: 'Unknown', type: '', source: '', email: '', phone: '', mobile: '' }; }
   }
 
   async getContactPerson(contactId: string, personId: string) {
@@ -141,6 +145,40 @@ export class JobManClient {
           // The response might be a paginated list or a direct array depending on the API nuances, 
           // usually list endpoints return { data: [...] }
           return response.data || response.members || [];
+      } catch (e) { return []; }
+  }
+
+  async getStaffMember(staffId: string) {
+      if (this.staffCache.has(staffId)) return this.staffCache.get(staffId);
+      try {
+          // Attempt to fetch staff details. Endpoint might be /staff/{id} or /organisations/{id}/staff/{id}
+          // specific docs were hard to find but this is a standard pattern.
+          const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/staff/${staffId}` });
+          const staff = response.data || response.staff || response;
+          const staffDetails = {
+              name: `${staff.first_name || ''} ${staff.last_name || ''}`.trim(),
+              email: staff.email || '',
+              role: staff.job_title || staff.role || '' // heuristic
+          };
+          this.staffCache.set(staffId, staffDetails);
+          return staffDetails;
+      } catch (e) { return { name: 'Unknown', email: '', role: '' }; }
+  }
+
+  async getJobMembers(jobId: string) {
+      try {
+          const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}/members` });
+          // response.data is likely array of { id, staff_id, ... }
+          const membersData = response.data || response.job_members || [];
+          
+          const members = [];
+          for (const m of membersData) {
+              if (m.staff_id) {
+                  const staff = await this.getStaffMember(m.staff_id);
+                  members.push(staff);
+              }
+          }
+          return members;
       } catch (e) { return []; }
   }
 }
