@@ -18,7 +18,7 @@ export default function Home() {
     jobs: true,
     invoices: true,
   });
-  const [isTestMode, setIsTestMode] = useState(true);
+  const [syncLimit, setSyncLimit] = useState<number | null>(5);
   const logContainerRef = useRef<HTMLDivElement>(null);
 
   // Check localStorage on mount
@@ -53,7 +53,7 @@ export default function Home() {
       const response = await fetch('/api/sync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...selected, limit: isTestMode ? 5 : null }),
+        body: JSON.stringify({ ...selected, limit: syncLimit }),
       });
 
       if (!response.body) throw new Error('No response body');
@@ -190,16 +190,31 @@ export default function Home() {
                 <h3 className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: '#454E49' }}>
                   Settings
                 </h3>
-                <label className="flex items-center justify-between px-3 py-2.5 rounded-lg border border-stone-200 cursor-pointer hover:border-[#454E49]/40 transition-colors">
-                  <span className="text-sm font-medium text-stone-700">Test Mode <span className="text-stone-400 font-normal">(Limit 5)</span></span>
-                  <input 
-                    type="checkbox" 
-                    checked={isTestMode} 
-                    onChange={() => setIsTestMode(!isTestMode)}
-                    className="w-4 h-4 rounded cursor-pointer"
-                    disabled={isRunning}
-                  />
-                </label>
+                <div className="space-y-3">
+                    <label className="block text-sm font-medium text-stone-700">
+                        Sync Limit
+                    </label>
+                    <div className="relative">
+                        <select
+                            value={syncLimit === null ? 'full' : syncLimit}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                setSyncLimit(val === 'full' ? null : Number(val));
+                            }}
+                            disabled={isRunning}
+                            className="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-white text-sm font-medium text-stone-700 outline-none focus:border-[#454E49]/50 transition-colors appearance-none cursor-pointer hover:border-[#454E49]/40"
+                        >
+                            <option value="5">Test (5 items)</option>
+                            <option value="10">Test (10 items)</option>
+                            <option value="20">Test (20 items)</option>
+                            <option value="50">Test (50 items)</option>
+                            <option value="full">Full Sync (All items)</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-stone-500">
+                            <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                        </div>
+                    </div>
+                </div>
               </div>
 
               {/* Divider */}
