@@ -28,7 +28,7 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
 
   for (const job of jobs) {
     console.log(`Processing Job: ${job.number}`);
-
+    
     // Resolve Contact Info
     let contact = null;
     if (job.contact_id) {
@@ -49,12 +49,55 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
         }
     }
 
-    // Resolve Members and Map Roles
+    // Resolve Members, Progress, and Install Date via Tasks
     let members: any[] = [];
+    let installDate = '';
+    let totalProgress = 0;
+    let taskCount = 0;
+
     try {
-        members = await client.getJobMembers(job.id);
+        const tasksResponse: any = await client.request({ method: 'GET', url: `/organisations/${client.orgId}/jobs/${job.id}/tasks` });
+        const tasksData = tasksResponse.tasks?.data || tasksResponse.data || tasksResponse.tasks || [];
+        
+        if (Array.isArray(tasksData)) {
+            // 1. Extract Members and Fetch Details
+            const allMembers = tasksData.flatMap((t: any) => t.members || []);
+            const seenMembers = new Set();
+            
+            for (const m of allMembers) {
+                const memberId = m.staff_id || m.id; // Task member might have 'staff_id' or just 'id'
+                if (memberId && !seenMembers.has(memberId)) {
+                    seenMembers.add(memberId);
+                    // Fetch full details to get the Role
+                    const fullStaff = await client.getStaffMember(memberId);
+                    // Merge task member name with full staff details (prefer full staff role)
+                    members.push({ ...m, ...fullStaff }); 
+                }
+            }
+
+            // 2. Find Install Date
+            // Debug: Log task names to help identify the correct one
+            const taskNames = tasksData.map((t: any) => t.name).join(', ');
+            console.log(`Job ${job.number} Tasks: [${taskNames}]`);
+
+            const installTask = tasksData.find((t: any) => t.name && (
+                t.name.toLowerCase().includes('install') || 
+                t.name.toLowerCase().includes('delivery') // Fallback check
+            ));
+            
+            if (installTask && installTask.target_date) {
+                installDate = formatDate(installTask.target_date);
+            }
+
+            // 3. Calculate Progress (Average of all tasks)
+            taskCount = tasksData.length;
+            if (taskCount > 0) {
+                const sum = tasksData.reduce((acc: number, t: any) => acc + (Number(t.progress) || 0), 0);
+                totalProgress = Math.round(sum / taskCount);
+            }
+        }
     } catch (e) {
-        console.error(`Failed to fetch members for job ${job.id}`, e);
+        console.error(`Failed to fetch tasks for job ${job.id}`, e);
     }
 
     const memberNames = members.map((m: any) => m.name).join(', ');
@@ -82,7 +125,7 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
       'Person Mobile': person.mobile,
       'Description': job.description || '',
       'Status': job.job_status_name || job.status?.name || '',
-      'Progress': job.progress || '', // If available, otherwise empty
+      'Progress': totalProgress > 0 ? `${totalProgress}%` : '',
       'Job Type': (job.types || []).map((t: any) => t.name).join(', '),
       'Lead': '', // No direct lead_id in job object to fetch lead details easily without extra calls
       'Project': job.description || '',
@@ -106,10 +149,10 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
       'Project Manager': getMemberByRole('Project Manager'),
       'Salesperson': getMemberByRole('Sales'),
       'Store Manager': getMemberByRole('Store'),
-      '{Lock in Install Date}': '', // Custom field likely
+      '{Lock in Install Date}': installDate,
       'Created': formatDate(job.created_at),
       'Updated': formatDate(job.updated_at),
-      'Production Manager': getMemberByRole('Production'),
+      'Production Manager': '',
       'AKL Factory Staff': '',
       'jobs': 'TRUE'
     });
