@@ -76,10 +76,6 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
             }
 
             // 2. Find Install Date
-            // Debug: Log task names to help identify the correct one
-            const taskNames = tasksData.map((t: any) => t.name).join(', ');
-            console.log(`Job ${job.number} Tasks: [${taskNames}]`);
-
             const installTask = tasksData.find((t: any) => t.name && (
                 t.name.toLowerCase().includes('install') || 
                 t.name.toLowerCase().includes('delivery') // Fallback check
@@ -90,11 +86,7 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
             }
 
             // 3. Calculate Progress (Average of all tasks)
-            taskCount = tasksData.length;
-            if (taskCount > 0) {
-                const sum = tasksData.reduce((acc: number, t: any) => acc + (Number(t.progress) || 0), 0);
-                totalProgress = Math.round(sum / taskCount);
-            }
+            // Progress field requested to be empty
         }
     } catch (e) {
         console.error(`Failed to fetch tasks for job ${job.id}`, e);
@@ -112,7 +104,7 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
 
     processed.push({
       'Number': job.number || '',
-      'Priority': job.priority || '',
+      'Priority': '',
       'Contact': contact?.name || '',
       'Contact Type': contact?.type || '',
       'Contact Source': contact?.source || '',
@@ -125,7 +117,8 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
       'Person Mobile': person.mobile,
       'Description': job.description || '',
       'Status': job.job_status_name || job.status?.name || '',
-      'Progress': totalProgress > 0 ? `${totalProgress}%` : '',
+      'Progress': '',
+
       'Job Type': (job.types || []).map((t: any) => t.name).join(', '),
       'Lead': '', // No direct lead_id in job object to fetch lead details easily without extra calls
       'Project': job.description || '',

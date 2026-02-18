@@ -44,8 +44,6 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
   const processedQuotes = [];
 
   for (const quote of allQuotes) {
-    // We only fetch the contact details (cached automatically)
-    // No more deep dive into components to keep it fast and stable
     const contact = quote.contact_id ? await client.getContactWithDetails(quote.contact_id) : null;
 
     processedQuotes.push({
@@ -58,7 +56,7 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
       'Date': formatDate(quote.date),
       'Expiry Date': formatDate(quote.expiry_date),
       'Cost': quote.cost || 0,
-      'Material Cost': 0, // Set to 0 since we removed the deep dive
+      'Material Cost': 0, 
       'Labour Cost': 0,
       'Service Cost': 0,
       'Appliance Cost': 0,

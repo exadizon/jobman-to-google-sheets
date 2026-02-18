@@ -17,6 +17,8 @@ export class JobManClient {
   private sourceCache: Map<string, string> = new Map();
   private leadCache: Map<string, any> = new Map();
   private jobCache: Map<string, any> = new Map();
+  public priorityCache: Map<string, string> = new Map();
+  public statusCache: Map<string, string> = new Map();
 
   constructor() {
     const apiKey = process.env.JOBMAN_API_KEY;
@@ -63,6 +65,21 @@ export class JobManClient {
     const sources: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/contacts/sources` });
     const sourceList = sources.data || sources.contact_sources?.data || sources.contact_sources || [];
     sourceList.forEach((s: any) => this.sourceCache.set(s.id, s.name));
+
+    // Try to fetch Priorities
+    try {
+        const priorities: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/priorities` }); 
+        // Endpoint guess: leads usually share priorities with jobs or have their own
+        const priorityList = priorities.data || priorities || [];
+        priorityList.forEach((p: any) => this.priorityCache.set(p.id, p.name));
+    } catch (e) { console.log('Failed to fetch priorities'); }
+
+    // Try to fetch Job Statuses (for Progress mapping if status is used)
+    try {
+        const statuses: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/statuses` });
+        const statusList = statuses.data || statuses || [];
+        statusList.forEach((s: any) => this.statusCache.set(s.id, s.name));
+    } catch (e) { console.log('Failed to fetch job statuses'); }
   }
 
   async getQuotes(page = 1, limit = 50) {

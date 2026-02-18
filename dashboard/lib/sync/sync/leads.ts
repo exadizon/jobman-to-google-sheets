@@ -75,9 +75,11 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
     // Map Lead Types array to string
     const leadTypes = (lead.types || []).map((t: any) => t.name).join(', ');
 
+    const priorityName = client.priorityCache.get(String(lead.priority)) || lead.priority || '';
+
     processedLeads.push({
       'Number': lead.number || '',
-      'Priority': lead.priority || '',
+      'Priority': priorityName,
       'Contact': contact?.name || 'Unknown',
       'Description': lead.description || '',
       'Lead Type': leadTypes,
@@ -89,7 +91,7 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
       'Person Phone': person.phone,
       'Person Mobile': person.mobile,
       'Project': lead.description || '', 
-      'Progress': '0', 
+      'Progress': lead.progress_name || lead.progress || '0', 
       'Site Address': lead.address || '',
       'Site Address Line 1': lead.address_line1 || '',
       'Site Address Line 2': lead.address_line2 || '',

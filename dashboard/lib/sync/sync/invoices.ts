@@ -29,27 +29,12 @@ export async function syncInvoices(client: JobManClient, limit: number | null = 
         if (inv.job_id) {
             const jobData = await client.getJobDetails(inv.job_id);
             jobNumber = jobData.number || '';
-            
-            // Look for Quote Number inside Job
-            quoteNumber = jobData.quote_number || (jobData.quote ? jobData.quote.number : '');
-            
-            // DEEP DEBUG (Only for first one)
-            if (processed.length === 0) {
-                console.log('--- DEBUG JOB STRUCTURE ---');
-                console.log('Job Keys:', Object.keys(jobData));
-                if (jobData.quotes) console.log('Job has quotes array:', jobData.quotes.length);
-            }
         }
 
         if (inv.lead_id) {
             const leadData = await client.getLeadDetails(inv.lead_id);
             leadNumber = leadData.number || '';
-            if (!quoteNumber) {
-                quoteNumber = leadData.quote_number || (leadData.quote ? leadData.quote.number : '');
-            }
         }
-
-        if (!quoteNumber) quoteNumber = inv.reference || '';
 
     } catch (e) {
         console.warn(`Error resolving details for invoice ${inv.number}`);
@@ -61,7 +46,7 @@ export async function syncInvoices(client: JobManClient, limit: number | null = 
       'Number': inv.number || '',
       'Reference': inv.reference || '',
       'Contact Name': inv.contact_name || '',
-      'Quote': quoteNumber, 
+      'Quote': '', // Requested to be empty 
       'Status': inv.invoice_status_name || '',
       'Type': inv.invoice_type_name || '',
       'Date': formatDate(inv.date),
