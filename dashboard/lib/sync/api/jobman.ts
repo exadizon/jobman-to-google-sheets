@@ -116,4 +116,31 @@ export class JobManClient {
         return detailedContact;
     } catch (e) { return { name: 'Unknown', type: '', source: '' }; }
   }
+
+  async getContactPerson(contactId: string, personId: string) {
+    const cacheKey = `${contactId}-${personId}`;
+    if (this.contactCache.has(cacheKey)) return this.contactCache.get(cacheKey);
+    try {
+        const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/contacts/${contactId}/persons/${personId}` });
+        const person = response.data || response.contact_person || response;
+        
+        const personDetails = {
+            name: `${person.first_name || ''} ${person.last_name || ''}`.trim(),
+            email: person.email || '',
+            phone: person.phone || '',
+            mobile: person.mobile || '',
+        };
+        this.contactCache.set(cacheKey, personDetails);
+        return personDetails;
+    } catch (e) { return { name: '', email: '', phone: '', mobile: '' }; }
+  }
+
+  async getLeadMembers(leadId: string) {
+      try {
+          const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}/members` });
+          // The response might be a paginated list or a direct array depending on the API nuances, 
+          // usually list endpoints return { data: [...] }
+          return response.data || response.members || [];
+      } catch (e) { return []; }
+  }
 }
