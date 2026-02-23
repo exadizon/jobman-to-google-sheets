@@ -46,9 +46,18 @@ export class JobManClient {
         const response = await this.client.request(config);
         return response.data;
       } catch (error: any) {
-        if (error.response?.status === 429 && retryCount < 3) {
-            const waitTime = (error.response.headers['retry-after'] || 30) * 1000;
-            console.warn(`⚠️ Rate limited. Waiting ${waitTime/1000}s...`);
+        const isRateLimit = error.response?.status === 429;
+        const isServerError = error.response?.status >= 500;
+        
+        if ((isRateLimit || isServerError) && retryCount < 3) {
+            let waitTime = 30 * 1000;
+            if (isRateLimit && error.response?.headers && error.response.headers['retry-after']) {
+               waitTime = parseInt(error.response.headers['retry-after']) * 1000 || waitTime;
+            } else if (isServerError) {
+               waitTime = 30 * 1000 * (retryCount + 1); 
+            }
+            
+            console.warn(`⚠️ API Error ${error.response?.status || error.message}. Waiting ${waitTime/1000}s before retry ${retryCount + 1}/3...`);
             await new Promise(res => setTimeout(res, waitTime));
             return this.request(config, retryCount + 1);
         }

@@ -2,10 +2,14 @@ import { JobManClient } from '../api/jobman';
 
 export async function syncJobs(client: JobManClient, limit: number | null = null) {
   console.log('--- Syncing Jobs ---');
-  // Helper to format date
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('en-AE'); 
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${dd}/${mm}/${yyyy}`;
   };
 
   const response: any = await client.getJobs(1, limit || 50);
