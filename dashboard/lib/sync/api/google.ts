@@ -45,9 +45,11 @@ export class GoogleSheetsClient {
 
     // 1. Set Row 1: Date
     const today = new Date().toLocaleDateString('en-GB');
-    await sheet.loadCells('A1:A1');
-    const cell = sheet.getCell(0, 0);
-    cell.value = `Date Exported: ${today}`;
+    await sheet.loadCells('A1:B1');
+    const cellA1 = sheet.getCell(0, 0);
+    cellA1.value = 'Date Exported:';
+    const cellB1 = sheet.getCell(0, 1);
+    cellB1.value = today;
     await sheet.saveUpdatedCells();
 
     if (data.length > 0) {
