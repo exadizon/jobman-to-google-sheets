@@ -12,25 +12,47 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
     return `${dd}/${mm}/${yyyy}`;
   };
 
-  const response: any = await client.getJobs(1, limit || 50);
+  let allJobs: any[] = [];
+  let currentPage = 1;
+  let hasMore = true;
 
-  // Robustly extract jobs data
-  let jobs = [];
-  if (Array.isArray(response)) {
-      jobs = response;
-  } else if (response.jobs && Array.isArray(response.jobs.data)) {
-      jobs = response.jobs.data;
-  } else if (response.data && Array.isArray(response.data)) {
-      jobs = response.data;
-  } else if (response.jobs && Array.isArray(response.jobs)) {
-      jobs = response.jobs; 
+  while (hasMore) {
+    console.log(`Fetching page ${currentPage}...`);
+    const response: any = await client.getJobs(currentPage, limit ? Math.min(limit, 50) : 50);
+
+    // Robustly extract jobs data
+    let jobs = [];
+    if (Array.isArray(response)) {
+        jobs = response;
+    } else if (response.jobs && Array.isArray(response.jobs.data)) {
+        jobs = response.jobs.data;
+    } else if (response.data && Array.isArray(response.data)) {
+        jobs = response.data;
+    } else if (response.jobs && Array.isArray(response.jobs)) {
+        jobs = response.jobs; 
+    }
+    
+    allJobs = allJobs.concat(jobs);
+
+    if (limit && allJobs.length >= limit) {
+        allJobs = allJobs.slice(0, limit);
+        hasMore = false;
+        break;
+    }
+
+    const meta = response.jobs?.meta || response.meta;
+    if (meta && currentPage < meta.last_page) {
+        currentPage++;
+    } else {
+        hasMore = false;
+    }
   }
   
-  console.log(`Found ${jobs.length} jobs to process`);
+  console.log(`Found ${allJobs.length} jobs to process`);
 
   const processed = [];
 
-  for (const job of jobs) {
+  for (const job of allJobs) {
     console.log(`Processing Job: ${job.number}`);
     
     // Resolve Contact Info
