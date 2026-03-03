@@ -100,8 +100,8 @@ export class JobManClient {
   async getJobs(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs`, params: { page, limit, trashed } });
   }
-  async getInvoices(page = 1, limit = 50) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices`, params: { page, limit } });
+  async getInvoices(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices`, params: { page, limit, trashed } });
   }
   async getInvoiceDetails(invoiceId: string) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices/${invoiceId}` });

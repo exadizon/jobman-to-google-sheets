@@ -10,7 +10,7 @@ export async function syncInvoices(client: JobManClient, limit: number | null = 
 
   while (hasMore) {
     console.log(`Fetching page ${currentPage}...`);
-    const response: any = await client.getInvoices(currentPage, limit ? Math.min(limit, 50) : 50);
+    const response: any = await client.getInvoices(currentPage, limit ? Math.min(limit, 50) : 50, 0);
     const invoices = response.invoices?.data || [];
     allInvoices = allInvoices.concat(invoices);
 
