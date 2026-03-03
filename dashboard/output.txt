@@ -1,0 +1,54 @@
+[dotenv@17.3.1] injecting env (6) from ..\.env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+CSV total (distinct numbers): 694
+API total: 769
+Count Only in API: 75
+
+--- Statuses of Quotes Only in API ---
+{
+  'Estimate Created': 53,
+  'Quote Accepted': 17,
+  'Quote Sent': 1,
+  Superseded: 3,
+  Revision: 1
+}
+
+Count Only in CSV (not in API): 0
+
+Example only in API (first 5):
+[
+  {
+    number: '2602-021/01',
+    status: 'Estimate Created',
+    deleted: false,
+    archived: false,
+    statusName: 'Estimate Created'
+  },
+  {
+    number: '2509-087/06',
+    status: 'Estimate Created',
+    deleted: false,
+    archived: false,
+    statusName: 'Estimate Created'
+  },
+  {
+    number: '2602-004/03',
+    status: 'Estimate Created',
+    deleted: false,
+    archived: false,
+    statusName: 'Estimate Created'
+  },
+  {
+    number: '2602-007/02',
+    status: 'Estimate Created',
+    deleted: false,
+    archived: false,
+    statusName: 'Estimate Created'
+  },
+  {
+    number: '2602-008/02',
+    status: 'Estimate Created',
+    deleted: false,
+    archived: false,
+    statusName: 'Estimate Created'
+  }
+]

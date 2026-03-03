@@ -1,0 +1,52 @@
+[dotenv@17.3.1] injecting env (6) from ..\.env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+--- RAW FIELDS for quote only in API ---
+{
+  "id": "7c16f163-f7f9-4b64-be6b-029a7c72999e",
+  "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+  "number": "2602-021/01",
+  "introduction": "<p>Thank you Aimee Dykstra, for the opportunity to quote on your project. at Inspire Design LTD we know building or upgrading a space can feel overwhelming, but it should also be exciting. Our role is to make the process clear and stress-free while delivering quality, care, and professionalism at every stage.</p><p id=\"isPasted\"><strong>Here is your new spaces Specification:</strong></p><ul><li>Cabinets Doors &amp; Panels - 18mm MDF, Melamine Face, 1mm Laser Edge</li><li>Cabinet Colour – Brand, Colour</li><li>Accent Colour &amp; Floating Shelves – Brand, Colour</li><li>Handles – Type, Colour/Handle-free Section Colour</li><li>Proprietary integrated soft close hinges and drawer’s runners</li><li>Worktop - Thickness mm, Type, Colour, Finish – Cutouts (hob/tap/air switch)</li><li>Sink – Brand, Code, Finish</li><li>Sink – Top mounted/Under mounted</li><li>Integrated pull out bin, 2 x 24L buckets</li><li>ABS Cutlery Insert; Colour White</li><li>Scullery Cabinets – 16mm Melamine, Colour White</li><li>Scullery Worktop - Size mm, Type, Finish, Colour</li><li>Delivered and Installed</li></ul>",
+  "description": "Kitchen and Bar Devonport Calliope",
+  "quote_status_id": "7ea18a95-f44c-49ee-943a-336892fb0288",
+  "quote_status_name": "Estimate Created",
+  "contact_id": "7f30b7a4-a21e-448a-b76a-ce9aae8eb697",
+  "template_id": "9b6f40d9-efc9-4349-a46a-dace27a1838f",
+  "contact_person_id": "a66f7ea4-b51a-4d22-919a-a425b0af9177",
+  "date": "2026-02-23T23:41:34.000000Z",
+  "expiry_date": "2026-03-25T23:41:34.000000Z",
+  "created_at": "2026-02-23T23:40:44.000000Z",
+  "updated_at": "2026-02-23T23:41:54.000000Z",
+  "cost": "0.0000",
+  "overhead": "0.0000",
+  "overhead_percent": "0.0000",
+  "wastage": "0.0000",
+  "wastage_percent": "0.0000",
+  "profit": "0.0000",
+  "profit_percent": "0.0000",
+  "discount": "0.0000",
+  "discount_percent": "0.0000",
+  "subtotal": "0.0000",
+  "tax": "0.0000",
+  "total": "0.0000",
+  "totals_calculated": true,
+  "remove_product_labour": null
+}
+
+--- Object properties on onlyInApi[0] ---
+[
+  'id',                'organisation_id',
+  'number',            'introduction',
+  'description',       'quote_status_id',
+  'quote_status_name', 'contact_id',
+  'template_id',       'contact_person_id',
+  'date',              'expiry_date',
+  'created_at',        'updated_at',
+  'cost',              'overhead',
+  'overhead_percent',  'wastage',
+  'wastage_percent',   'profit',
+  'profit_percent',    'discount',
+  'discount_percent',  'subtotal',
+  'tax',               'total',
+  'totals_calculated', 'remove_product_labour'
+]
+Are all 75 quotes in API deleted? false
+Are all 75 quotes in API archived? false

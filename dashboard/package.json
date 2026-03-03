@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "sync-all": "tsx scripts/sync-all.ts"
+    "sync-all": "tsx scripts/sync-all.ts",
+    "compare": "tsx scripts/compare.ts"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.3",

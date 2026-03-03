@@ -1,0 +1,6 @@
+[dotenv@17.3.1] injecting env (6) from ..\.env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+API total (raw): 769
+API total (only latest revisions): 329
+CSV total (distinct numbers): 694
+Latest out of API that are ALSO in CSV: 295
+Latest out of API that are NOT in CSV: 34

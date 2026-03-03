@@ -1,0 +1,13 @@
+[dotenv@17.3.1] injecting env (6) from ..\.env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+Params: page=1&limit=1 -> Total: 769
+Params: page=1&limit=1&trashed=false -> Total: 75
+Params: page=1&limit=1&trashed=0 -> Total: 694
+Params: page=1&limit=1&deleted=false -> Total: 769
+Params: page=1&limit=1&deleted=0 -> Total: 769
+Params: page=1&limit=1&is_deleted=0 -> Total: 769
+Params: page=1&limit=1&active=true -> Total: 645
+Params: page=1&limit=1&status=active -> HTTP 500
+Params: page=1&limit=1&filter=%5B%7B%22property%22%3A%22deleted_at%22%2C%22operator%22%3A%22%3D%22%2C%22value%22%3Anull%7D%5D -> Total: 769
+Params: page=1&limit=1&filter=%5B%7B%22property%22%3A%22deleted_at%22%2C%22operator%22%3A%22is%20null%22%7D%5D -> Total: 769
+Params: page=1&limit=1&filter=%5B%7B%22property%22%3A%22deleted%22%2C%22value%22%3A0%7D%5D -> Total: 769
+Params: page=1&limit=1&filter=%5B%7B%22property%22%3A%22is_deleted%22%2C%22value%22%3A0%7D%5D -> Total: 769

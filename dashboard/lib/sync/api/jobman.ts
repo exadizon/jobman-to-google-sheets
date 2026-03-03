@@ -91,14 +91,14 @@ export class JobManClient {
     } catch (e) { console.log('Failed to fetch job statuses'); }
   }
 
-  async getQuotes(page = 1, limit = 50) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/quotes`, params: { page, limit } });
+  async getQuotes(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/quotes`, params: { page, limit, trashed } });
   }
-  async getLeads(page = 1, limit = 50) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads`, params: { page, limit } });
+  async getLeads(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/leads`, params: { page, limit, trashed } });
   }
-  async getJobs(page = 1, limit = 50) {
-    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs`, params: { page, limit } });
+  async getJobs(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
+    return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/jobs`, params: { page, limit, trashed } });
   }
   async getInvoices(page = 1, limit = 50) {
     return this.request<any>({ method: 'GET', url: `/organisations/${this.orgId}/invoices`, params: { page, limit } });

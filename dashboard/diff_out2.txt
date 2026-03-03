@@ -1,0 +1,6 @@
+[dotenv@17.3.1] injecting env (6) from ..\.env -- tip: ≡ƒ¢á∩╕Å  run anywhere with `dotenvx run -- yourcommand`
+Keys only in 05: []
+Keys only in 06: []
+Differing properties (ignoring IDs and timestamps):
+  quote_status_id -> 05:"157fadf7-166e-41a2-8f3c-1e3838da7ba1" vs 06:"7ea18a95-f44c-49ee-943a-336892fb0288"
+  quote_status_name -> 05:"Superseded" vs 06:"Estimate Created"
