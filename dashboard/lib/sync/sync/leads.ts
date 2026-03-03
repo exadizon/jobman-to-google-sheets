@@ -5,12 +5,35 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
   console.log('--- Starting Leads Sync ---');
   await client.initializeLookups();
   
-  const response: any = await client.getLeads(1, limit || 50); 
-  const leads = response.leads?.data || [];
+  let allLeads: any[] = [];
+  let currentPage = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    console.log(`Fetching page ${currentPage}...`);
+    const response: any = await client.getLeads(currentPage, limit ? Math.min(limit, 50) : 50);
+    const leads = response.leads?.data || [];
+    allLeads = allLeads.concat(leads);
+
+    if (limit && allLeads.length >= limit) {
+        allLeads = allLeads.slice(0, limit);
+        hasMore = false;
+        break;
+    }
+
+    const meta = response.leads?.meta || response.meta;
+    if (meta && currentPage < meta.last_page) {
+        currentPage++;
+    } else {
+        hasMore = false;
+    }
+  }
+
+  console.log(`📊 Found ${allLeads.length} total leads. Processing members...`);
   
   const processedLeads = [];
 
-  for (const lead of leads) {
+  for (const lead of allLeads) {
     console.log(`Processing Lead: ${lead.number}`);
     
     // Resolve Contact Info (Name, Type, Source)

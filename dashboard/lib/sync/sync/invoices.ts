@@ -4,11 +4,35 @@ import { formatDate } from './quotes';
 export async function syncInvoices(client: JobManClient, limit: number | null = null) {
   console.log('--- Starting Invoices Sync ---');
   
-  const response: any = await client.getInvoices(1, limit || 50); 
-  const invoices = response.invoices?.data || [];
+  let allInvoices: any[] = [];
+  let currentPage = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    console.log(`Fetching page ${currentPage}...`);
+    const response: any = await client.getInvoices(currentPage, limit ? Math.min(limit, 50) : 50);
+    const invoices = response.invoices?.data || [];
+    allInvoices = allInvoices.concat(invoices);
+
+    if (limit && allInvoices.length >= limit) {
+        allInvoices = allInvoices.slice(0, limit);
+        hasMore = false;
+        break;
+    }
+
+    const meta = response.invoices?.meta || response.meta;
+    if (meta && currentPage < meta.last_page) {
+        currentPage++;
+    } else {
+        hasMore = false;
+    }
+  }
+
+  console.log(`📊 Found ${allInvoices.length} total invoices. Processing details...`);
+
   const processed = [];
 
-  for (const inv of invoices) {
+  for (const inv of allInvoices) {
     console.log(`Processing Invoice: ${inv.number}`);
 
     let details: any = {};
