@@ -6,10 +6,31 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
     if (!dateString) return '';
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
     const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
     const yyyy = date.getFullYear();
     return `${dd}/${mm}/${yyyy}`;
+  };
+
+  // Helper: find task date by keyword match on task name (case-insensitive, ignores emojis)
+  const getTaskDate = (tasks: any[], keyword: string) => {
+    const task = tasks.find((t: any) => {
+      if (!t.name) return false;
+      const cleanName = t.name.replace(/[\p{Emoji_Presentation}\p{Emoji}\u200d\ufe0f]/gu, '').trim();
+      return cleanName.toLowerCase().includes(keyword.toLowerCase());
+    });
+    return task?.target_date ? formatDate(task.target_date) : '';
+  };
+
+  // Helper: find LAST task matching keyword (for B2B vs B2C distinction)
+  const getLastTaskDate = (tasks: any[], keyword: string) => {
+    const matches = tasks.filter((t: any) => {
+      if (!t.name) return false;
+      const cleanName = t.name.replace(/[\p{Emoji_Presentation}\p{Emoji}\u200d\ufe0f]/gu, '').trim();
+      return cleanName.toLowerCase().includes(keyword.toLowerCase());
+    });
+    const task = matches.length > 0 ? matches[matches.length - 1] : null;
+    return task?.target_date ? formatDate(task.target_date) : '';
   };
 
   let allJobs: any[] = [];
@@ -20,7 +41,6 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
     console.log(`Fetching page ${currentPage}...`);
     const response: any = await client.getJobs(currentPage, limit ? Math.min(limit, 50) : 50);
 
-    // Robustly extract jobs data
     let jobs = [];
     if (Array.isArray(response)) {
         jobs = response;
@@ -29,9 +49,9 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
     } else if (response.data && Array.isArray(response.data)) {
         jobs = response.data;
     } else if (response.jobs && Array.isArray(response.jobs)) {
-        jobs = response.jobs; 
+        jobs = response.jobs;
     }
-    
+
     allJobs = allJobs.concat(jobs);
 
     if (limit && allJobs.length >= limit) {
@@ -47,14 +67,14 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
         hasMore = false;
     }
   }
-  
+
   console.log(`Found ${allJobs.length} jobs to process`);
 
   const processed = [];
 
   for (const job of allJobs) {
     console.log(`Processing Job: ${job.number}`);
-    
+
     // Resolve Contact Info
     let contact = null;
     if (job.contact_id) {
@@ -75,58 +95,56 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
         }
     }
 
-    // Resolve Members, Progress, and Install Date via Tasks
+    // Resolve Members via Job Members endpoint (uses job_member_type_id for accurate role)
     let members: any[] = [];
-    let installDate = '';
-    let totalProgress = 0;
-    let taskCount = 0;
-
     try {
-        const tasksResponse: any = await client.request({ method: 'GET', url: `/organisations/${client.orgId}/jobs/${job.id}/tasks` });
-        const tasksData = tasksResponse.tasks?.data || tasksResponse.data || tasksResponse.tasks || [];
-        
-        if (Array.isArray(tasksData)) {
-            // 1. Extract Members and Fetch Details
-            const allMembers = tasksData.flatMap((t: any) => t.members || []);
-            const seenMembers = new Set();
-            
-            for (const m of allMembers) {
-                const memberId = m.staff_id || m.id; // Task member might have 'staff_id' or just 'id'
-                if (memberId && !seenMembers.has(memberId)) {
-                    seenMembers.add(memberId);
-                    // Fetch full details to get the Role
-                    const fullStaff = await client.getStaffMember(memberId);
-                    // Merge task member name with full staff details (prefer full staff role)
-                    members.push({ ...m, ...fullStaff }); 
-                }
-            }
+        members = await client.getJobMembers(job.id);
+    } catch (e) {
+        console.error(`Failed to fetch members for job ${job.id}`, e);
+    }
 
-            // 2. Find Install Date
-            const installTask = tasksData.find((t: any) => t.name && (
-                t.name.toLowerCase().includes('install') || 
-                t.name.toLowerCase().includes('delivery') // Fallback check
-            ));
-            
-            if (installTask && installTask.target_date) {
-                installDate = formatDate(installTask.target_date);
-            }
+    // Sort members alphabetically
+    members.sort((a: any, b: any) => (a.name || '').localeCompare(b.name || ''));
 
-            // 3. Calculate Progress (Average of all tasks)
-            // Progress field requested to be empty
-        }
+    const memberNames = members.map((m: any) => m.name).filter(Boolean).join(', ');
+
+    // Role Mapping Helper — uses job_member_type_id resolved to role name
+    const getMembersByRole = (roleName: string) => {
+        return members
+            .filter((m: any) => m.role === roleName)
+            .map((m: any) => m.name)
+            .join(', ');
+    };
+
+    // Fetch tasks for this job (with pagination)
+    let jobTasks: any[] = [];
+    try {
+        jobTasks = await client.getJobTasks(job.id);
     } catch (e) {
         console.error(`Failed to fetch tasks for job ${job.id}`, e);
     }
 
-    const memberNames = members.map((m: any) => m.name).join(', ');
+    // Task-date columns use only this job's own tasks (not parent's)
+    const taskDateSource = jobTasks;
 
-    // Role Mapping Helper
-    const getMemberByRole = (roleKeyword: string) => {
-        return members
-            .filter((m: any) => m.role && m.role.toLowerCase().includes(roleKeyword.toLowerCase()))
-            .map((m: any) => m.name)
-            .join(', ');
-    };
+    // Resolve Lead via job items
+    let leadDisplay = '';
+    try {
+        let items = await client.getJobItems(job.id);
+        // If no items with lead_id on this job, check parent job
+        if ((!items.length || !items.find((i: any) => i.lead_id)) && job.parent_job_id) {
+            items = await client.getJobItems(job.parent_job_id);
+        }
+        const itemWithLead = items.find((i: any) => i.lead_id);
+        if (itemWithLead) {
+            const lead = await client.getLeadDetails(itemWithLead.lead_id);
+            if (lead) {
+                leadDisplay = `${lead.number} - ${lead.description || ''}`.trim();
+            }
+        }
+    } catch (e) {
+        // Lead resolution is best-effort
+    }
 
     processed.push({
       'Number': job.number || '',
@@ -144,9 +162,8 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
       'Description': job.description || '',
       'Status': job.job_status_name || job.status?.name || '',
       'Progress': '',
-
       'Job Type': (job.types || []).map((t: any) => t.name).join(', '),
-      'Lead': '', // No direct lead_id in job object to fetch lead details easily without extra calls
+      'Lead': leadDisplay,
       'Project': job.description || '',
       'Site Address': job.address || '',
       'Site Address Line 1': job.address_line1 || '',
@@ -158,22 +175,27 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
       'Value': job.value || 0,
       'Members': memberNames,
       'Notes': job.notes || '',
-      'Accounts': getMemberByRole('Account'),
-      'CNC Operator': getMemberByRole('CNC'),
-      'Designer': getMemberByRole('Design'),
-      'Design Manager': getMemberByRole('Design Manager'),
-      'Edge Bander': getMemberByRole('Edge'),
-      'Installer': getMemberByRole('Install'),
-      'Operations Staff': getMemberByRole('Operation'),
-      'Project Manager': getMemberByRole('Project Manager'),
-      'Salesperson': getMemberByRole('Sales'),
-      'Store Manager': getMemberByRole('Store'),
-      '{Lock in Install Date}': installDate,
+      'Accounts': getMembersByRole('Accounts'),
+      'Admin Support': getMembersByRole('Admin Support'),
+      'AKL Factory Staff': getMembersByRole('AKL Factory Staff'),
+      'Assembly technicians': getMembersByRole('Assembly technicians'),
+      'CNC Operator': getMembersByRole('CNC Operator'),
+      'Designer': getMembersByRole('Designer'),
+      'Design Manager': getMembersByRole('Design Manager'),
+      'Edge Bander': getMembersByRole('Edge Bander'),
+      'Installer': getMembersByRole('Installer'),
+      'Production Manager': getMembersByRole('Production Manager'),
+      'Project Manager': getMembersByRole('Project Manager'),
+      'Salesperson': getMembersByRole('Salesperson'),
+      'Store Manager': getMembersByRole('Store Manager'),
+      '{B2B Deposit Invoice sent}': getTaskDate(taskDateSource, 'B2B Deposit Invoice'),
+      '{Create and send final Invoice (B2C)}': getTaskDate(taskDateSource, 'Create and Send Final Invoice'),
+      '{Primary Installation}': getTaskDate(taskDateSource, 'Primary Installation'),
+      '{Worktop Install}': getTaskDate(taskDateSource, 'Worktop Install'),
+      '{Final Fit Off}': getTaskDate(taskDateSource, 'Final Fit Off'),
+      '{Create and Send Final Invoice (B2B)}': getLastTaskDate(taskDateSource, 'Create and Send Final Invoice'),
       'Created': formatDate(job.created_at),
       'Updated': formatDate(job.updated_at),
-      'Production Manager': '',
-      'AKL Factory Staff': '',
-      'jobs': 'TRUE'
     });
   }
   return processed;

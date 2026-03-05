@@ -19,6 +19,7 @@ export class JobManClient {
   private jobCache: Map<string, any> = new Map();
   public priorityCache: Map<string, string> = new Map();
   public statusCache: Map<string, string> = new Map();
+  public jobMemberTypeCache: Map<string, string> = new Map();
 
   constructor() {
     const apiKey = process.env.JOBMAN_API_KEY;
@@ -89,6 +90,13 @@ export class JobManClient {
         const statusList = statuses.data || statuses || [];
         statusList.forEach((s: any) => this.statusCache.set(s.id, s.name));
     } catch (e) { console.log('Failed to fetch job statuses'); }
+
+    // Fetch Job Member Types (maps job_member_type_id to role name)
+    try {
+        const memberTypes: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/member-types` });
+        const memberTypeList = memberTypes.data || memberTypes.job_member_types?.data || memberTypes.job_member_types || [];
+        memberTypeList.forEach((mt: any) => this.jobMemberTypeCache.set(mt.id, mt.name));
+    } catch (e) { console.log('Failed to fetch job member types'); }
   }
 
   async getQuotes(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
@@ -194,17 +202,43 @@ export class JobManClient {
   async getJobMembers(jobId: string) {
       try {
           const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}/members` });
-          // response.data is likely array of { id, staff_id, ... }
-          const membersData = response.data || response.job_members || [];
-          
+          const membersData = response.data?.data || response.job_members?.data || response.data || response.job_members || [];
+
           const members = [];
           for (const m of membersData) {
               if (m.staff_id) {
                   const staff = await this.getStaffMember(m.staff_id);
-                  members.push(staff);
+                  const memberType = this.jobMemberTypeCache.get(m.job_member_type_id) || '';
+                  members.push({ ...staff, role: memberType });
               }
           }
           return members;
       } catch (e) { return []; }
+  }
+
+  async getJobItems(jobId: string) {
+      try {
+          const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}/items` });
+          return response.data || response.job_items?.data || response.job_items || [];
+      } catch (e) { return []; }
+  }
+
+  async getJobTasks(jobId: string) {
+      let allTasks: any[] = [];
+      let page = 1;
+      try {
+          while (true) {
+              const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/${jobId}/tasks`, params: { page, limit: 50 } });
+              const tasksData = response.tasks?.data || response.data || response.tasks || [];
+              allTasks = allTasks.concat(tasksData);
+              const meta = response.tasks?.meta || response.meta;
+              if (meta && page < meta.last_page) {
+                  page++;
+              } else {
+                  break;
+              }
+          }
+      } catch (e) { /* return what we have */ }
+      return allTasks;
   }
 }

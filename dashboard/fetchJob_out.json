@@ -1,0 +1,807 @@
+[dotenv@17.3.1] injecting env (6) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+{
+  "id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+  "number": "0274.2",
+  "description": "Lot 2065 - 4 Ah Bow Lane  - Laundry",
+  "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+  "parent_job_id": "2f91504d-5a10-4d0f-a2c9-bac50ffe9dec",
+  "types": [
+    {
+      "id": "780338fd-eb6d-439e-a01c-a6775fca78b3",
+      "name": "02_Queenstown"
+    },
+    {
+      "id": "318b53d6-339d-49da-afab-4f9c899b7b93",
+      "name": "03_Builder"
+    }
+  ],
+  "job_status_id": "7dadb744-de27-4f06-886a-06a8307ec03a",
+  "job_status_name": "Pre Production🗂️",
+  "contact_id": "dd0b9c6e-96ef-44ab-9676-d134dccf557b",
+  "contact_person_id": "62dec2bf-257a-45e1-a8d7-f25867c5a69f",
+  "workflow_id": "d83f0657-f705-4c60-95d8-78bef6e0d577",
+  "workflow_name": "Production Flow",
+  "address": null,
+  "address_line1": null,
+  "address_line2": null,
+  "address_city": null,
+  "address_region": null,
+  "address_postal_code": null,
+  "address_country_id": null,
+  "value": "3132.9600",
+  "notes": null,
+  "created_at": "2026-03-04T07:35:13.000000Z",
+  "updated_at": "2026-03-04T07:35:35.000000Z",
+  "trashed_at": null,
+  "detail_01": null,
+  "detail_02": null,
+  "detail_03": null,
+  "detail_04": null,
+  "detail_05": null,
+  "detail_06": null,
+  "detail_07": null,
+  "detail_08": null,
+  "detail_09": null,
+  "detail_10": null,
+  "detail_11": null,
+  "detail_12": null,
+  "detail_13": null,
+  "detail_14": null,
+  "detail_15": null,
+  "detail_16": null,
+  "detail_17": null,
+  "detail_18": null,
+  "detail_19": null,
+  "detail_20": null,
+  "detail_21": null,
+  "detail_22": null,
+  "detail_23": null,
+  "detail_24": null,
+  "detail_25": null,
+  "detail_26": null,
+  "detail_27": null,
+  "detail_28": null,
+  "detail_29": null,
+  "detail_30": null
+}
+--- TASKS ---
+[
+  {
+    "id": "b6139bda-b43b-40ae-b380-0388b0f001a0",
+    "name": "📏 Site Measure",
+    "step_id": "8e1a1f04-218b-46a7-a657-a7951ff51ed1",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><p id=\"isPasted\">Site Measure is essential to getting the design accurate which results in a smooth install!</p><ol><li>Review Job</li><li>Confirm Site address</li><li>Locate Site Measure plan in the Job files (Files &gt; Manufacturing &gt; Site Measure)&nbsp;</li><li>Take this with you to site (preferably electronic)</li><li>Complete site measure, requirements are:<ul><li>Wall Length&nbsp;</li><li>Wall Height&nbsp;</li><li>Window dimensions&nbsp;</li><li>Window elevation and distance to adjacent walls</li><li>Plumbing centres</li><li>Bulkhead location and dimensions&nbsp;</li><li>Note any anomalies that may affect the install or manufacturing of the kitchen.</li></ul></li><li>All measurements on plan need to be checked and confirmed:<ul><li>if correct Circle the measurement&nbsp;</li><li>if incorrect, draw a strike through the measurement and write the correct measurement next to it.</li></ul></li><li>Once completed, save a copy as \"Site Measure - Completed\":<ol><li>Electronic- ensure file is saved in Jobman files&nbsp;</li><li>Printed - upload a photo of the printed copy to Jobman files</li></ol></li></ol><p>⏰ Expected Timelines ⏰</p><p>Site measure should be scheduled 5 days prior to task due date.&nbsp;</p><p><br></p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "3674cdcf-050c-4ae6-b442-2f8b80d8a5c0",
+    "estimated_time": 5400,
+    "actual_time": 0,
+    "target_date_calculation": 0,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-05-06T12:00:00.000000Z",
+    "target_date": "2026-05-06T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "d1adcfaf-1b3a-4958-b1ef-b1dafd2867b2",
+        "name": "Pre Production🏭",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "7519cc59-60f9-4537-a0fd-61e1ef0ff9c4",
+        "name": "Duncan Nicholson",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Duncan+Nicholson",
+        "member_id": "358838fe-fc8a-4f71-a815-02843e93bd08"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "c7f46c78-5067-43d6-bd5b-583709723002",
+    "name": "👀 Design Review",
+    "step_id": "8e1a1f04-218b-46a7-a657-a7951ff51ed1",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br></li></ol><p>🔨 Inspire SOPs 🔨</p><p>Site measure has been completed and is ready for the design review in preparation for BOM finalisation. Please:</p><ol style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'><li style=\"box-sizing: border-box;\">Swap the generic wall unit to a rangehood cabinet (this has cutout for spec of rangehood and ducting space)</li><li style=\"box-sizing: border-box;\">Swap the generic wall under panel to a rangehood under panel (this has cutout for spec of rangehood)</li><li style=\"box-sizing: border-box;\">Adjust drawing as per site measure shorten/length wall as necessary and therefore adjust cabinetry accordingly</li><li style=\"box-sizing: border-box;\">Delete the 40mm ceiling scribes and input CSP 120 (found in tall panels 18mm)</li><li style=\"box-sizing: border-box;\">Delete the toe skins in molding tab and add in 2400W toe kicks (amount required to cover front feet area) - Always round up</li><li>Generate and save Multiprints copies in the <strong>Job</strong> and <strong>Workorder&nbsp;</strong>\"Shared\" folders, as follows:&nbsp;<ul><li>Technical Drawings (plans + elevations)&nbsp;</li><li>Tops Plan &nbsp;</li><li>Renders&nbsp;</li></ul></li><li style=\"box-sizing: border-box;\">Archive any previous designs plans in the Jobman Files Shared folder so that only the updated version is in there.</li><li style=\"box-sizing: border-box;\">Navigate to the materials section of the Workorder and review the Mozaik BOM alongside the Jobman BOM.</li><li style=\"box-sizing: border-box;\">Update the Jobman BOM to reflect the same materials and quantities detailed in the Mozaik BOM.</li><li style=\"box-sizing: border-box;\">Review Loom video \"Source materials\"</li><li style=\"box-sizing: border-box;\">Click Source&nbsp;</li><li style=\"box-sizing: border-box;\"><strong>Deselect&nbsp;</strong>\"Source Stock in Transit\"&nbsp;</li><li style=\"box-sizing: border-box;\">Click Source in the pop-up window.&nbsp;</li><li style=\"box-sizing: border-box;\">Complete this task.</li></ol><p>⏰ Expected Timelines ⏰</p><p id=\"isPasted\"><br></p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "1a7bcdfc-a3f0-4f7e-8a84-8413dc962bd5",
+    "estimated_time": 3600,
+    "actual_time": 0,
+    "target_date_calculation": 2,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-05-10T12:00:00.000000Z",
+    "target_date": "2026-05-10T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ead09432-7856-42c7-939e-b9ab5e5a1714",
+        "name": "AKL_02_Design🎨",
+        "selected": false
+      },
+      {
+        "id": "0258cb24-acc3-4830-92fd-73c3c6732add",
+        "name": "QT_02_Design🎨",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "42ce75f8-96ff-4555-8f08-aee971b18341",
+        "name": "Bea Reyes",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Bea+Reyes",
+        "member_id": "77a2b504-5cfd-4f8a-bac2-fba9d88b4712"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "200724ea-2675-43f1-8936-ff6440d33128",
+    "name": "🏪 Order Materials",
+    "step_id": "8e1a1f04-218b-46a7-a657-a7951ff51ed1",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br></li></ol><p>🔨 Inspire SOPs 🔨</p><ol style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);'><li style=\"box-sizing: border-box;\">Navigate to Purchase orders tab</li><li style=\"box-sizing: border-box;\">Review Pending Purchase orders.</li><li style=\"box-sizing: border-box;\">Order materials by supplier ie; Laminex in bulk (Note: review Loom video \"Materials PO\")</li></ol><p><em><strong>NOTE</strong><strong>:</strong> if any materials have an ETA of 5 days or more the Salesman and Project Manager need to be notified via Teams and asked if there is an alternative, they want to swap the material out with.&nbsp;</em><br><br></p><p>⏰ Expected Timelines ⏰</p><p>Complete within 24 hours of Finalising BOM</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "c093c838-035e-4d63-801f-b43ff2de9fe6",
+    "estimated_time": 1800,
+    "actual_time": 0,
+    "target_date_calculation": 1,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-05-11T12:00:00.000000Z",
+    "target_date": "2026-05-11T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "d1adcfaf-1b3a-4958-b1ef-b1dafd2867b2",
+        "name": "Pre Production🏭",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "e6307283-d9a0-4662-a30d-36428e2251dc",
+        "name": "Rachel Aguilar",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Rachel+Aguilar",
+        "member_id": "ffa73c3d-0ac6-4408-87d6-a2b696a47500"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "a1cc52a6-47d0-43ee-9c94-3b85332571a0",
+    "name": "💣 Finalising BOM (Detailing)",
+    "step_id": "8e1a1f04-218b-46a7-a657-a7951ff51ed1",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><p>This is the final checks and reviews before the job is generated for manufacture.&nbsp;</p><ol style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);'><li style=\"box-sizing: border-box;\">Ensure all materials and hardware are correct and appropriate for the intended use</li><li style=\"box-sizing: border-box;\">Review all cabinets and ensure no anomalies in:<ul><li style=\"box-sizing: border-box;\">Size</li><li style=\"box-sizing: border-box;\">Shape&nbsp;</li><li style=\"box-sizing: border-box;\">Handle ware</li><li style=\"box-sizing: border-box;\">Feet placement&nbsp;</li></ul></li><li>Review colours are consistent with renders and quote</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">Ensure all materials and hardware are correct as per the quote.&nbsp;</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">Review the Materials in Jobman alongside the Mozaik BOM and add any additional components to the BOM in Jobman&nbsp;</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">Select source</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">In popup window deselect \"Order in Transit\"&nbsp;</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">In popup window select source.</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">Generate the following:<ul><li id=\"isPasted\" style=\"box-sizing: border-box;\">Info Sheet</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">BOM&nbsp;</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">Patterns&nbsp;</li><li id=\"isPasted\" style=\"box-sizing: border-box;\">Job Brief&nbsp;</li></ul></li><li>Save the generated docs in the \"Manufacturing\" folder of the <strong>Workorder </strong>Sharepoint folder.</li><li>Optimise Cut patterns in Mozaik Optimiser</li><li>Review and adjust to ensure no smaller panels are at risk of damage due to being too close to edges.&nbsp;</li><li>Generate G-Code in Mozaik Optimiser</li></ol><p>⏰ Expected Timelines ⏰</p><p>Within 48hours of design review&nbsp;</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "b22fb95b-390f-4968-9cce-133b4cf60fcb",
+    "estimated_time": 3600,
+    "actual_time": 0,
+    "target_date_calculation": 0,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-05-11T12:00:00.000000Z",
+    "target_date": "2026-05-11T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ead09432-7856-42c7-939e-b9ab5e5a1714",
+        "name": "AKL_02_Design🎨",
+        "selected": false
+      },
+      {
+        "id": "0258cb24-acc3-4830-92fd-73c3c6732add",
+        "name": "QT_02_Design🎨",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "99586104-ad90-4df5-948e-05c635d1a8b7",
+        "name": "Greg Sherlock",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Greg+Sherlock",
+        "member_id": "ab0795f7-83f0-4795-a9cb-9ce1bb52dadd"
+      },
+      {
+        "id": "60a0b1dd-abc1-48c8-8615-1a0e7f03d9a0",
+        "name": "Michael Olsen",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Michael+Olsen",
+        "member_id": "0152782a-2f21-47ea-821c-20f9dff839cf"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "c7f46c78-5067-43d6-bd5b-583709723002",
+        "name": "👀 Design Review"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "c76403a3-b295-416d-8e51-622fb1c0b476",
+    "name": "🪄 Create Deliverables",
+    "step_id": "8e1a1f04-218b-46a7-a657-a7951ff51ed1",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>🔨 Inspire SOPs 🔨</p><ol style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'><li style=\"box-sizing: border-box;\">Navigate to work order</li><li>Navigate to the SharePoint folder for the work order and open the <strong>Infosheet</strong><strong>&nbsp;</strong>using the <strong>PDF Gear</strong>, PDF reader.</li><li>In the PDF Gear reader navigate to \"Tools\" &gt; \"Convert\"&gt; \"PDF to Excel\"</li><li>Select Convert in Pop up window, this will then save it to your downloads folder.</li><li>Open the Excel sheet and delete the top 3 rows for better viewability.&nbsp;</li><li>Navigate to Jobman Workorder &gt; Resources &gt; Deliverables &gt; Import</li><li>Select Jobman as the driver then select Import</li><li>Download the Sample CSV and Open it (it will be saved in your downloads folder)</li><li>Review this Loom Video <a href=\"https://www.loom.com/share/316bf463411446c2939dabd7ed610bce\">here</a></li><li>With both the converted Excel Infosheet and the Sample CSV open transfer the information from the infosheet to the Sample CSV&nbsp;</li><li>Navigate to Work order &gt; Resources &gt; Materials&nbsp;</li><li>Using the Snipping tool take a screen grab of the Materials Name column&nbsp;</li><li>Using the text extraction function in Snipping tool copy the text</li><li>Paste this text into the Sample CSV Name column</li><li>Navigate back to the work order materials screen and take a screen grab of the quantities of the materials items.</li><li id=\"isPasted\">Using the text extraction function in Snipping tool copy the text</li><li>Paste this text into the Sample CSV Description column</li><li>In the Sample CSV remove blank, edge tape and board rows.&nbsp;</li><li>Save the Sample CSV sheet.&nbsp;</li><li>Navigate back to the Work order Deliverables&gt; import&nbsp;</li><li>Drag and drop this sample CSV into the \"Import Deliverables\" drop box.</li></ol><p>⏰ Expected Timelines ⏰</p><p>Within 24 hours of Finalising BOM</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "3b7d98b0-4320-4b7f-8b65-8f0dbbbce6b9",
+    "estimated_time": 1200,
+    "actual_time": 0,
+    "target_date_calculation": 2,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-05-13T12:00:00.000000Z",
+    "target_date": "2026-05-13T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "d1adcfaf-1b3a-4958-b1ef-b1dafd2867b2",
+        "name": "Pre Production🏭",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "85698293-187e-4dd2-a08e-a2784cba2eae",
+        "name": "Dionell Jumaquio",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Dionell+Jumaquio",
+        "member_id": "5769be8d-2b2e-46bd-9c46-89ead3d31e88"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "a1cc52a6-47d0-43ee-9c94-3b85332571a0",
+        "name": "💣 Finalising BOM (Detailing)"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "11cb9ccc-168e-40a1-83d8-0a0fd14fb982",
+    "name": "🛒 Materials Picking",
+    "step_id": "8e1a1f04-218b-46a7-a657-a7951ff51ed1",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><ol><li>Review Picking list&nbsp;</li><li>Pick all material items required as per picking list</li><li>Label all Material Items with the job number and name.&nbsp;</li><li>Centralise all hardware and components in picking shelves</li><li>Centralise all board and tape in cut prep rack in Factory (ensure label is visible from the front)&nbsp;</li></ol><p><em>NOTE: if stock is not physically on location, ensure on receipt that it is labelled and centralised with the other elements of the Job.&nbsp;</em></p><p>⏰ Expected Timelines ⏰</p><p>Within 24 hours of Finalising BOM</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "d615c0f7-d00a-456d-bddf-028b74172ddb",
+    "estimated_time": 1800,
+    "actual_time": 0,
+    "target_date_calculation": 12,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-01T12:00:00.000000Z",
+    "target_date": "2026-06-01T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "b5e9e056-f1c9-448b-ad2f-e8ae15e11e5a",
+        "name": "AKL_06_Accounts💰",
+        "selected": false
+      },
+      {
+        "id": "d1adcfaf-1b3a-4958-b1ef-b1dafd2867b2",
+        "name": "Pre Production🏭",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "513281ef-729b-476f-89e8-9874880060df",
+        "name": "Bruce Warner",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Bruce+Warner",
+        "member_id": "3f3f4303-712b-43b9-b002-0652b9471eba"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "200724ea-2675-43f1-8936-ff6440d33128",
+        "name": "🏪 Order Materials"
+      },
+      {
+        "id": "a1cc52a6-47d0-43ee-9c94-3b85332571a0",
+        "name": "💣 Finalising BOM (Detailing)"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "45b05e7b-d394-4765-aa5b-dbe94535c2f4",
+    "name": "🪚 Cut",
+    "step_id": "a6b1bfe1-fc3c-4259-b0bb-b4f0c68fdd39",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p>🔨 Inspire SOPs 🔨</p><p>While the CNC is largely automated it still requires a skilled operator to ensure a successful cut.&nbsp;</p><ol><li>Check tooling is appropriate and in good condition.</li><li>Ensure all aspects of CNC are clean and free of debris or excessive dust.</li><li>Pick board from store rack with appropriate Job Number&nbsp;</li><li id=\"isPasted\">Navigate to the jobs files and review:<ul><li>BOM&nbsp;</li><li>Patterns&nbsp;</li></ul></li><li>Confirm the right board colour/finish and quantity are on the loading bed for cutting.</li><li>Review G-Code file and load onto USB&nbsp;</li><li>Load USB into CNC tower.&nbsp;</li><li>Select appropriate settings and begin CNC of board.</li><li>While cutting review the patterns and what is being cut to ensure they're in alignment.</li><li>Tick off each sheet on pattern doc as completed. (electronic)&nbsp;</li><li>Once sheet is completed stay clear of CNC bed until offloading is complete.</li><li>Once Offloading complete load into trolley for Edge Banding.&nbsp;</li></ol><p><em>NOTE: if there are miscuts or damages note this with an X on the patterns and regenerate the g-code file for that item and recut at end of job.</em></p><p>⏰ Expected Timelines ⏰</p><p>Once all materials are availble</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "80ad60ac-3848-49ea-9be0-b6ba6a2d7751",
+    "estimated_time": 10800,
+    "actual_time": 0,
+    "target_date_calculation": 2,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-03T12:00:00.000000Z",
+    "target_date": "2026-06-03T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "8f891fdf-03fc-42df-819e-d4ba25222366",
+        "name": "AK_Machining",
+        "selected": false
+      },
+      {
+        "id": "d1adcfaf-1b3a-4958-b1ef-b1dafd2867b2",
+        "name": "Pre Production🏭",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "47856454-816d-45cc-be74-50bbe9ab2380",
+        "name": "Paul Seo",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Paul+Seo",
+        "member_id": "6dc3dcfc-c6be-4935-945e-42969a55bbba"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "a1cc52a6-47d0-43ee-9c94-3b85332571a0",
+        "name": "💣 Finalising BOM (Detailing)"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:35.000000Z"
+  },
+  {
+    "id": "78df2215-31f6-4019-98d1-a734e287c05c",
+    "name": "📼 Edge Banding",
+    "step_id": "a6b1bfe1-fc3c-4259-b0bb-b4f0c68fdd39",
+    "description": "<p>👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><p>Follow these Steps:</p><ol style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);'><li style=\"box-sizing: border-box;\">Review the following located in the Job Files:&nbsp;<ul><li style=\"box-sizing: border-box;\">BOM&nbsp;</li><li style=\"box-sizing: border-box;\">Infosheet&nbsp;</li></ul></li><li>Inspect cut panels for damage and odd shapes.</li><li>Take any panels that require hand edging to Assembly area and detail what the edging requirements are.&nbsp;</li><li>Ensure Edging assignments are correct (PVC or Laser) and make sense.&nbsp;</li><li>Check Edge tape assigned vs board colour and ensure the match or contrast as expected.</li><li>Set up Edging machine for the correct edging assignment.&nbsp;</li><li>Ensure the machine is clean and free of excess glue or debris.</li><li>Complete Edging checking each piece to ensure the edging is of good quality.&nbsp;</li><li>Once edged completely place into trolley.&nbsp;</li></ol><p><em>NOTE: If using PVC UG tape, White glue for white/light colours and Black glue for Black/Dark colours&nbsp;</em></p><p><em>NOTE: When panels have elements that require hand edging these must be taken straight to the assembly team for completion. Once completed the panel must be brought back to the Edge Banding station for inspection and to go on the trolley. &nbsp;</em></p><p>⏰ Expected Timelines ⏰</p><p>As materials are available&nbsp;</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "ec3800d5-5437-4df8-aebf-c31f45e55164",
+    "estimated_time": 7200,
+    "actual_time": 0,
+    "target_date_calculation": 0,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-03T12:00:00.000000Z",
+    "target_date": "2026-06-03T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "8f891fdf-03fc-42df-819e-d4ba25222366",
+        "name": "AK_Machining",
+        "selected": false
+      },
+      {
+        "id": "d1adcfaf-1b3a-4958-b1ef-b1dafd2867b2",
+        "name": "Pre Production🏭",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "a1ffca41-98c0-4c1f-a967-f005ae0eec3c",
+        "name": "Jacques Kroef",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Jacques+Kroef",
+        "member_id": "be9ef710-0ba1-4fd9-b73d-ad263cd681e3"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "45b05e7b-d394-4765-aa5b-dbe94535c2f4",
+        "name": "🪚 Cut"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "b243e454-b755-4876-840f-240a05d08af0",
+    "name": "🔬 Checking and Wrapping",
+    "step_id": "0b96ad76-73f7-42c7-a4fa-a8179179f12d",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><p>QA checks are essential for a quality product</p><ol><li>Inspect each panel for the following:<ul><li>Chips, Cracks, Scratches in Melamine.</li><li>Defects in board surface.&nbsp;</li><li>Incorrect edging.</li><li>Damaged edging.&nbsp;</li></ul></li><li>If damage can be remedied do so, if a recut/edge is required notify the factory manager.&nbsp;</li><li>Wipe down panels as you go with a dry rag or spray and wipe for more stubborn marks.</li><li>Wrap panels for cabinets in their elements, Ensure the stickers are reviewed to avoid mixing elements up.&nbsp;</li><li>Ensure all cabinet pieces are present before completing.</li><li>Put items back into trolley.&nbsp;</li></ol><p>⏰ Expected Timelines ⏰</p><p>Within 24 hours of Cut and Edge&nbsp;</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "e8eab29b-c431-4268-a2d8-0fc455c436c6",
+    "estimated_time": 14400,
+    "actual_time": 0,
+    "target_date_calculation": 1,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-04T12:00:00.000000Z",
+    "target_date": "2026-06-04T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ebca411b-d434-4c15-80c9-53f52d58a79c",
+        "name": "AKL_04_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "183f8ba7-72f9-49b6-8ba4-1944a6e16a1f",
+        "name": "Daniyar Sarsembayev",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Daniyar+Sarsembayev",
+        "member_id": "6a362bdc-6622-47ea-8afb-ea09510f48ad"
+      },
+      {
+        "id": "1592dd9d-b236-48a0-a481-90fbd5adbb77",
+        "name": "Nili Halafihi",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Nili+Halafihi",
+        "member_id": "e56f2d26-13d5-4b69-889f-34e4710fe66a"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "78df2215-31f6-4019-98d1-a734e287c05c",
+        "name": "📼 Edge Banding"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "8dca1a91-c9fd-4b5e-9a6b-b2213a4692e1",
+    "name": "🔃 Palletise - QT",
+    "step_id": "0b96ad76-73f7-42c7-a4fa-a8179179f12d",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><ol><li>Review Infosheet&nbsp;</li><li>Review Picking List</li><li>Palletise all elements of the Job, checking off each item as it is palletised.</li><li>Conduct a final check for stability and using shrink wrap, wrap the pallet.&nbsp;</li><li>Place \"Fragile\" and \"Top stow only\" stickers on shrink wrap.&nbsp;</li></ol><p><em>NOTE: ensure foam is placed between panels that are stacked to avoid damage.&nbsp;</em></p><p><em>NOTE: Put protective cardboard on corners to minimise transport damage.&nbsp;</em></p><p>⏰ Expected Timelines ⏰</p><p>Within 24 hours of check and wrap</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "407ce968-63a1-4e7d-b1b3-d8a90e8a3c31",
+    "estimated_time": 14400,
+    "actual_time": 0,
+    "target_date_calculation": 1,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-07T12:00:00.000000Z",
+    "target_date": "2026-06-07T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ebca411b-d434-4c15-80c9-53f52d58a79c",
+        "name": "AKL_04_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "513281ef-729b-476f-89e8-9874880060df",
+        "name": "Bruce Warner",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Bruce+Warner",
+        "member_id": "f80eae38-f24d-4eb3-8c06-485b66bec0e2"
+      }
+    ],
+    "requires_selection": "selected",
+    "requires_selection_ids": [
+      {
+        "id": "11cb9ccc-168e-40a1-83d8-0a0fd14fb982",
+        "name": "🛒 Materials Picking"
+      },
+      {
+        "id": "b243e454-b755-4876-840f-240a05d08af0",
+        "name": "🔬 Checking and Wrapping"
+      }
+    ],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "2a0efc0f-db26-4d43-8c26-25ced19bed38",
+    "name": "📖 Book the Freight - QT",
+    "step_id": "0b96ad76-73f7-42c7-a4fa-a8179179f12d",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><ol><li>Head to Walkers online Portal</li><li>Create a new consignment order.&nbsp;</li><li>Print Consignment sticker&nbsp;</li><li>Attach sticker to Pallet.&nbsp;</li><li>Place pallet aside awaiting collection.&nbsp;</li></ol><p><em>NOTE: Collection times TBC</em></p><p>⏰ Expected Timelines ⏰</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "b3eefed9-7391-4b0c-92d2-5952deabf462",
+    "estimated_time": 900,
+    "actual_time": 0,
+    "target_date_calculation": 1,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-08T12:00:00.000000Z",
+    "target_date": "2026-06-08T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ebca411b-d434-4c15-80c9-53f52d58a79c",
+        "name": "AKL_04_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "513281ef-729b-476f-89e8-9874880060df",
+        "name": "Bruce Warner",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Bruce+Warner",
+        "member_id": "39af398e-127f-4a9e-92dc-505244cec285"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "dda42bc4-d669-4512-9371-7b1c36f33eab",
+    "name": "🚚 Pallet collected - AKL",
+    "step_id": "0b96ad76-73f7-42c7-a4fa-a8179179f12d",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><ol><li>When truck arrives using forklift load the pallet under the drivers instruction.&nbsp;</li></ol><p>⏰ Expected Timelines ⏰</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "f7a44160-28ec-4e07-bbb1-1a11fbbcf010",
+    "estimated_time": 1200,
+    "actual_time": 0,
+    "target_date_calculation": 0,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-08T12:00:00.000000Z",
+    "target_date": "2026-06-08T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ebca411b-d434-4c15-80c9-53f52d58a79c",
+        "name": "AKL_04_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "513281ef-729b-476f-89e8-9874880060df",
+        "name": "Bruce Warner",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Bruce+Warner",
+        "member_id": "9c246556-dcd3-4234-9cae-b11eb0a76e59"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "af1d1d99-09ad-405e-851d-48bc6f5ee130",
+    "name": "🛻 Received Goods - QT",
+    "step_id": "0b96ad76-73f7-42c7-a4fa-a8179179f12d",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><ol><li>Ensure sufficient space is available for offload in the QT warehouse</li><li>Offload Pallet from truck</li><li>Conduct a walk around of the pallet to ensure there is no obvious damage.&nbsp;</li><li>Accept receipt of pallet.&nbsp;</li><li>Store appropriately inside Warehouse.&nbsp;</li></ol><p>⏰ Expected Timelines ⏰</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "58d6de6e-8bfc-4271-b15a-dab3575f9221",
+    "estimated_time": 900,
+    "actual_time": 0,
+    "target_date_calculation": 6,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-16T12:00:00.000000Z",
+    "target_date": "2026-06-16T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "51514ff7-4d6f-4403-9102-5521a81cabc4",
+        "name": "QT_03_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "4dcc7624-7645-4b26-ae93-0e1fcd552980",
+        "name": "Clebson Almeida",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Clebson+Almeida",
+        "member_id": "6aabea85-a85b-4911-b5b4-508c59b2fe93"
+      },
+      {
+        "id": "e21ec711-2506-4b97-8080-c9e891f119b7",
+        "name": "Jordan Carlson",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Jordan+Carlson",
+        "member_id": "ed1514d5-f1a1-4d94-9912-4e3e9b0bd81f"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "5e4da58d-8e7e-4ad3-bf9f-b556f93f7da8",
+    "name": "👩🏼‍🏭 Assemble",
+    "step_id": "d9085463-3e86-433c-89f8-b1757589bd37",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>🔨 Inspire SOPs 🔨</p><ol><li>Review Plans, Elevations and Renders to become familiar with expected result.&nbsp;</li><li>Review Hardware Specs.</li><li>Assemble products in a logical fashion (inspect for damage as assembling)&nbsp;</li><li>Once cabinets are assembled check for smooth operation of any installed hardware.</li></ol><p>⏰ Expected Timelines ⏰</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 2,
+    "operation_id": "bf6dba31-c33f-47b0-bd59-ba14cacd7a07",
+    "estimated_time": 28800,
+    "actual_time": 0,
+    "target_date_calculation": 1,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-17T12:00:00.000000Z",
+    "target_date": "2026-06-17T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ebca411b-d434-4c15-80c9-53f52d58a79c",
+        "name": "AKL_04_Manufacturing/Assembly🛠️",
+        "selected": false
+      },
+      {
+        "id": "51514ff7-4d6f-4403-9102-5521a81cabc4",
+        "name": "QT_03_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "4dcc7624-7645-4b26-ae93-0e1fcd552980",
+        "name": "Clebson Almeida",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Clebson+Almeida",
+        "member_id": "263709d1-08aa-4f85-ab37-c49dbf3cd4db"
+      },
+      {
+        "id": "e21ec711-2506-4b97-8080-c9e891f119b7",
+        "name": "Jordan Carlson",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Jordan+Carlson",
+        "member_id": "6050becc-4c93-40f4-ace0-3b8225277925"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  },
+  {
+    "id": "dab218ef-a896-4966-830e-f884f3a946b5",
+    "name": "🔍 Quality Inspection",
+    "step_id": "d9085463-3e86-433c-89f8-b1757589bd37",
+    "description": "<p id=\"isPasted\">👣 Follow These Steps 👣</p><p><br></p><p>⚡&nbsp;Trigger&nbsp;⚡</p><ol start=\"1\" style='box-sizing: border-box; color: rgb(55, 65, 81); font-family: \"Inter var\", helvetica, arial, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; background-color: rgb(255, 255, 255);' type=\"1\"><li style=\"box-sizing: border-box;\"><br style=\"box-sizing: border-box;\"></li></ol><p>🔨 Inspire SOPs 🔨</p><ol><li>Complete Assembly QA form&nbsp;<ul><li style=\"font-weight: bold;\"><strong>step by step where to find form</strong></li></ul></li><li>Someone other than the primary assembler must inspect a minimum of 20% of the assembled product for panel and edge damage.&nbsp;</li><li>All Hardware elements must be checked and ensure correct operation.&nbsp;</li></ol><p>⏰ Expected Timelines ⏰</p>",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "item_id": "4d19c2f1-2cf5-45e2-89c5-a6599b887148",
+    "staff_qty": 1,
+    "operation_id": "0aa14be2-05e7-497b-8457-200aea60d424",
+    "estimated_time": 1800,
+    "actual_time": 0,
+    "target_date_calculation": 1,
+    "estimated_day": null,
+    "status": "not_started",
+    "progress": 0,
+    "start_date": "2026-06-18T12:00:00.000000Z",
+    "target_date": "2026-06-18T12:00:00.000000Z",
+    "target_date_locked": false,
+    "completed_at": null,
+    "labour_centres": [
+      {
+        "id": "ebca411b-d434-4c15-80c9-53f52d58a79c",
+        "name": "AKL_04_Manufacturing/Assembly🛠️",
+        "selected": false
+      },
+      {
+        "id": "51514ff7-4d6f-4403-9102-5521a81cabc4",
+        "name": "QT_03_Manufacturing/Assembly🛠️",
+        "selected": false
+      }
+    ],
+    "members": [
+      {
+        "id": "4dcc7624-7645-4b26-ae93-0e1fcd552980",
+        "name": "Clebson Almeida",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Clebson+Almeida",
+        "member_id": "538b634a-9385-41e7-bddf-367bd37f8ff7"
+      },
+      {
+        "id": "e21ec711-2506-4b97-8080-c9e891f119b7",
+        "name": "Jordan Carlson",
+        "avatar": "https://ui-avatars.com/api/?format=svg&bold=true&background=333333&color=FFFFFF&rounded=true&name=Jordan+Carlson",
+        "member_id": "a9cb9ad0-cf13-4a09-8c34-afeeaf40b07a"
+      }
+    ],
+    "requires_selection": "all",
+    "requires_selection_ids": [],
+    "types_selection": "all",
+    "types_selection_ids": [],
+    "trigger_ids": [],
+    "created_at": "2026-03-04T07:35:14.000000Z",
+    "updated_at": "2026-03-04T07:35:34.000000Z"
+  }
+]

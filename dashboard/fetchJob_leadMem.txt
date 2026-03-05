@@ -1,0 +1,7 @@
+[dotenv@17.3.1] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+--- LEAD MEMBERS ---
+Member: Anna Smith | Role: Sales Consultant | ID: d73e5ce5-fde5-417d-813b-3901707737a6
+Member: Anna Smith | Role: Sales Consultant | ID: d73e5ce5-fde5-417d-813b-3901707737a6
+Member: Bea Reyes | Role: Designer | ID: 42ce75f8-96ff-4555-8f08-aee971b18341
+Member: Michael Olsen | Role: Design Manager | ID: 60a0b1dd-abc1-48c8-8615-1a0e7f03d9a0
+Member: Rachel Aguilar | Role: Accountant | ID: e6307283-d9a0-4662-a30d-36428e2251dc

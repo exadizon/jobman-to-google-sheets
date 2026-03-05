@@ -1,0 +1,68 @@
+[dotenv@17.3.1] injecting env (6) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+{
+  "job": {
+    "id": "6122be10-b370-4daa-ad64-c5db3a45e7c3",
+    "number": "0271.2",
+    "description": "Mick Pannett - 3 Whitechapel Road, Arrow Junction - Laundry",
+    "organisation_id": "fbc41182-dffc-4597-ab02-462388d6a239",
+    "parent_job_id": "da34a8eb-af18-4f1c-a961-3388790b8cd6",
+    "types": [
+      {
+        "id": "c1d9366f-2ec3-4678-8ff9-fcda15ee27fc",
+        "name": "04_Customer Retail"
+      },
+      {
+        "id": "780338fd-eb6d-439e-a01c-a6775fca78b3",
+        "name": "02_Queenstown"
+      }
+    ],
+    "job_status_id": "7dadb744-de27-4f06-886a-06a8307ec03a",
+    "job_status_name": "Pre Production🗂️",
+    "contact_id": "e179bc0c-740a-4359-822a-870b4919917b",
+    "contact_person_id": null,
+    "workflow_id": "d83f0657-f705-4c60-95d8-78bef6e0d577",
+    "workflow_name": "Production Flow",
+    "address": "3 Whitechapel Rd, \nArrow Junction, Otago Region, New Zealand, 9371",
+    "address_line1": "3 Whitechapel Rd",
+    "address_line2": null,
+    "address_city": "Arrow Junction",
+    "address_region": "Otago Region",
+    "address_postal_code": "9371",
+    "address_country_id": "NZ",
+    "value": "7022.6296",
+    "notes": null,
+    "created_at": "2026-03-04T01:35:32.000000Z",
+    "updated_at": "2026-03-04T01:36:28.000000Z",
+    "trashed_at": null,
+    "detail_01": null,
+    "detail_02": null,
+    "detail_03": null,
+    "detail_04": null,
+    "detail_05": null,
+    "detail_06": null,
+    "detail_07": null,
+    "detail_08": null,
+    "detail_09": null,
+    "detail_10": null,
+    "detail_11": null,
+    "detail_12": null,
+    "detail_13": null,
+    "detail_14": null,
+    "detail_15": null,
+    "detail_16": null,
+    "detail_17": null,
+    "detail_18": null,
+    "detail_19": null,
+    "detail_20": null,
+    "detail_21": null,
+    "detail_22": null,
+    "detail_23": null,
+    "detail_24": null,
+    "detail_25": null,
+    "detail_26": null,
+    "detail_27": null,
+    "detail_28": null,
+    "detail_29": null,
+    "detail_30": null
+  }
+}

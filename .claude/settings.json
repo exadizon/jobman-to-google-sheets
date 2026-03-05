@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node test_fields.mjs:*)",
+      "Bash(node:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsx:*)"
+    ]
+  }
+}
