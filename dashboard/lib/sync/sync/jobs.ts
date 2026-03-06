@@ -17,7 +17,7 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
   const getTaskDate = (tasks: any[], keyword: string) => {
     const task = tasks.find((t: any) => {
       if (!t.name) return false;
-      const cleanName = t.name.replace(/[\p{Emoji_Presentation}\p{Emoji}\u200d\ufe0f]/gu, '').trim();
+      const cleanName = t.name.replace(/[\p{Extended_Pictographic}\u200d\ufe0f\u{1F3FB}-\u{1F3FF}]/gu, '').trim();
       return cleanName.toLowerCase().includes(keyword.toLowerCase());
     });
     return task?.target_date ? formatDate(task.target_date) : '';
@@ -27,7 +27,7 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
   const getLastTaskDate = (tasks: any[], keyword: string) => {
     const matches = tasks.filter((t: any) => {
       if (!t.name) return false;
-      const cleanName = t.name.replace(/[\p{Emoji_Presentation}\p{Emoji}\u200d\ufe0f]/gu, '').trim();
+      const cleanName = t.name.replace(/[\p{Extended_Pictographic}\u200d\ufe0f\u{1F3FB}-\u{1F3FF}]/gu, '').trim();
       return cleanName.toLowerCase().includes(keyword.toLowerCase());
     });
     const task = matches.length > 0 ? matches[matches.length - 1] : null;

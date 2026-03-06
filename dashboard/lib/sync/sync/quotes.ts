@@ -46,6 +46,16 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
   for (const quote of allQuotes) {
     const contact = quote.contact_id ? await client.getContactWithDetails(quote.contact_id) : null;
 
+    // Resolve salesperson via the quote's linked lead
+    let salesperson = '';
+    if (quote.lead_id) {
+      try {
+        salesperson = await client.getLeadSalesperson(quote.lead_id);
+      } catch (e) {
+        // Best-effort
+      }
+    }
+
     processedQuotes.push({
       'Number': quote.number || quote.quote_number || '',
       'Description': quote.description || '',
@@ -72,6 +82,7 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
       'Created': formatDate(quote.created_at),
       'Updated': formatDate(quote.updated_at),
       'Jobman job no. / other comments': quote.job_number || '',
+      'Salesperson': salesperson,
       'quotes': 'TRUE'
     });
   }
