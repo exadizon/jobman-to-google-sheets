@@ -32,12 +32,20 @@ export class GoogleSheetsClient {
   async updateSheet(sheetTitle: string, data: any[]) {
     await this.loadInfo();
     let sheet = this.doc.sheetsByTitle[sheetTitle];
-    
+
     if (!sheet) {
         const availableSheets = Object.keys(this.doc.sheetsByTitle).join(', ');
         console.warn(`❌ Sheet "${sheetTitle}" not found.`);
         console.warn(`   Available: [${availableSheets}]`);
         return;
+    }
+
+    // Ensure sheet has enough columns before writing
+    if (data.length > 0) {
+      const requiredCols = Object.keys(data[0]).length;
+      if (sheet.columnCount < requiredCols) {
+        await sheet.resize({ rowCount: sheet.rowCount, columnCount: requiredCols });
+      }
     }
 
     // To fix the "Colon Bug", we clear the sheet using the Sheet ID instead of the Title string
@@ -54,16 +62,16 @@ export class GoogleSheetsClient {
 
     if (data.length > 0) {
       const headers = Object.keys(data[0]);
-      
+
       // Instead of addRows (which has the bug), we will use a more direct method
       // We set the headers on Row 2
       await sheet.setHeaderRow(headers, 2);
-      
+
       // Now we add the data
       // Using a small delay or a more direct append to avoid the Colon issue
       await sheet.addRows(data);
     }
-    
+
     console.log(`Updated ${sheetTitle} with ${data.length} rows.`);
   }
 }

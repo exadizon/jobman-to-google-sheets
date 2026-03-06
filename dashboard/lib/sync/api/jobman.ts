@@ -95,7 +95,7 @@ export class JobManClient {
     try {
         const memberTypes: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/jobs/member-types` });
         const memberTypeList = memberTypes.data || memberTypes.job_member_types?.data || memberTypes.job_member_types || [];
-        memberTypeList.forEach((mt: any) => this.jobMemberTypeCache.set(mt.id, mt.name));
+        memberTypeList.forEach((mt: any) => this.jobMemberTypeCache.set(String(mt.id), mt.name));
     } catch (e) { console.log('Failed to fetch job member types'); }
   }
 
@@ -176,10 +176,57 @@ export class JobManClient {
   async getLeadMembers(leadId: string) {
       try {
           const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}/members` });
-          // The response might be a paginated list or a direct array depending on the API nuances, 
+          // The response might be a paginated list or a direct array depending on the API nuances,
           // usually list endpoints return { data: [...] }
           return response.data || response.members || [];
       } catch (e) { return []; }
+  }
+
+  private leadSalespersonCache: Map<string, string> = new Map();
+
+  async getLeadSalesperson(leadId: string): Promise<string> {
+      if (this.leadSalespersonCache.has(leadId)) return this.leadSalespersonCache.get(leadId)!;
+      try {
+          // Try tasks first (same approach as leads sync)
+          let members: any[] = [];
+          try {
+              const tasksResponse: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}/tasks` });
+              const tasksData = tasksResponse.tasks?.data || tasksResponse.data || tasksResponse.tasks || [];
+              if (Array.isArray(tasksData) && tasksData.length > 0) {
+                  const allMembers = tasksData.flatMap((t: any) => t.members || []);
+                  const seen = new Set<string>();
+                  for (const m of allMembers) {
+                      const id = m.staff_id || m.id;
+                      if (id && !seen.has(id)) {
+                          seen.add(id);
+                          const staff = await this.getStaffMember(id);
+                          members.push({ ...m, ...staff });
+                      }
+                  }
+              }
+          } catch (e) { /* fall through to direct members */ }
+
+          if (members.length === 0) {
+              const directMembers = await this.getLeadMembers(leadId);
+              for (const m of directMembers) {
+                  const id = m.staff_id || m.id;
+                  if (id) {
+                      const staff = await this.getStaffMember(id);
+                      members.push({ ...m, ...staff });
+                  }
+              }
+          }
+
+          const salesperson = members
+              .filter((m: any) => m.role && m.role.toLowerCase().includes('sales'))
+              .map((m: any) => m.name)
+              .join(', ');
+          this.leadSalespersonCache.set(leadId, salesperson);
+          return salesperson;
+      } catch (e) {
+          this.leadSalespersonCache.set(leadId, '');
+          return '';
+      }
   }
 
   async getStaffMember(staffId: string) {
@@ -208,7 +255,7 @@ export class JobManClient {
           for (const m of membersData) {
               if (m.staff_id) {
                   const staff = await this.getStaffMember(m.staff_id);
-                  const memberType = this.jobMemberTypeCache.get(m.job_member_type_id) || '';
+                  const memberType = this.jobMemberTypeCache.get(String(m.job_member_type_id)) || '';
                   members.push({ ...staff, role: memberType });
               }
           }

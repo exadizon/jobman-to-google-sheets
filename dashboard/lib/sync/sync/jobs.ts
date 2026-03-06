@@ -2,6 +2,7 @@ import { JobManClient } from '../api/jobman';
 
 export async function syncJobs(client: JobManClient, limit: number | null = null) {
   console.log('--- Syncing Jobs ---');
+  await client.initializeLookups();
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);

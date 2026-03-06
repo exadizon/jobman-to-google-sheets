@@ -13,7 +13,7 @@ export function formatDate(dateString: string) {
 export async function syncQuotes(client: JobManClient, limit: number | null = null) {
   console.log('--- Starting Quotes Sync ---');
   await client.initializeLookups();
-  
+
   let allQuotes: any[] = [];
   let currentPage = 1;
   let hasMore = true;
@@ -24,7 +24,7 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
     const response: any = await client.getQuotes(currentPage, limit ? Math.min(limit, 50) : 50);
     const quotes = response.quotes?.data || [];
     allQuotes = allQuotes.concat(quotes);
-    
+
     if (limit && allQuotes.length >= limit) {
         allQuotes = allQuotes.slice(0, limit);
         hasMore = false;
@@ -56,7 +56,7 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
       'Date': formatDate(quote.date),
       'Expiry Date': formatDate(quote.expiry_date),
       'Cost': quote.cost || 0,
-      'Material Cost': 0, 
+      'Material Cost': 0,
       'Labour Cost': 0,
       'Service Cost': 0,
       'Appliance Cost': 0,
