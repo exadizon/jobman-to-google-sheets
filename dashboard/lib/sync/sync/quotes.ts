@@ -41,16 +41,43 @@ export async function syncQuotes(client: JobManClient, limit: number | null = nu
 
   console.log(`📊 Found ${allQuotes.length} total quotes. Processing contacts...`);
 
+  // Build a lead number -> lead ID map for salesperson lookup
+  // Quote numbers follow pattern "LEAD_NUMBER/REVISION" (e.g. "2603-001/02" -> lead "2603-001")
+  const leadNumberToId = new Map<string, string>();
+  try {
+    let leadPage = 1;
+    let hasMoreLeads = true;
+    while (hasMoreLeads) {
+      const leadResp: any = await client.getLeads(leadPage, 50);
+      const leads = leadResp.leads?.data || [];
+      for (const l of leads) {
+        if (l.number && l.id) leadNumberToId.set(l.number, l.id);
+      }
+      const leadMeta = leadResp.leads?.meta || leadResp.meta;
+      if (leadMeta && leadPage < leadMeta.last_page) {
+        leadPage++;
+      } else {
+        hasMoreLeads = false;
+      }
+    }
+    console.log(`Loaded ${leadNumberToId.size} leads for salesperson lookup`);
+  } catch (e) {
+    console.log('Failed to load leads for salesperson lookup');
+  }
+
   const processedQuotes = [];
 
   for (const quote of allQuotes) {
     const contact = quote.contact_id ? await client.getContactWithDetails(quote.contact_id) : null;
 
-    // Resolve salesperson via the quote's linked lead
+    // Resolve salesperson via the quote's parent lead (number prefix before "/")
     let salesperson = '';
-    if (quote.lead_id) {
+    const quoteNumber = quote.number || '';
+    const leadNumber = quoteNumber.split('/')[0];
+    const leadId = leadNumberToId.get(leadNumber);
+    if (leadId) {
       try {
-        salesperson = await client.getLeadSalesperson(quote.lead_id);
+        salesperson = await client.getLeadSalesperson(leadId);
       } catch (e) {
         // Best-effort
       }

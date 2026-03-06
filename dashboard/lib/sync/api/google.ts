@@ -68,17 +68,23 @@ export class GoogleSheetsClient {
       // Write everything in one API call using raw values.update
       // This bypasses setHeaderRow/addRows which have issues with header row on row 2
       const sheetsApi = (sheet as any)._spreadsheet.sheetsApi;
-      await sheetsApi.put(
+      const totalRows = allValues.length;
+      const totalCols = headers.length;
+      const range = `${sheet.a1SheetName}!A1`;
+      console.log(`Writing ${totalRows} rows x ${totalCols} cols to ${range}`);
+      const response = await sheetsApi.put(
         `values/${sheet.encodedA1SheetName}!A1`,
         {
-          searchParams: { valueInputOption: 'USER_ENTERED' },
+          searchParams: { valueInputOption: 'USER_ENTERED', includeValuesInResponse: false },
           json: {
-            range: `${sheet.a1SheetName}!A1`,
+            range,
             majorDimension: 'ROWS',
             values: allValues,
           },
         }
       );
+      const result = await response.json();
+      console.log(`API response: ${JSON.stringify(result)}`);
     } else {
       // No data, just write the date
       const today = new Date().toLocaleDateString('en-GB');
