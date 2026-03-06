@@ -13,25 +13,40 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
     return `${dd}/${mm}/${yyyy}`;
   };
 
+  // Format a date-only value (like target_date) using UTC to avoid timezone shifts.
+  // Task target_dates are stored as "YYYY-MM-DDT12:00:00Z" (noon UTC), which shifts
+  // forward a day in UTC+12/+13 timezones when using local date methods.
+  const formatDateUTC = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    const dd = String(date.getUTCDate()).padStart(2, '0');
+    const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const yyyy = date.getUTCFullYear();
+    return `${dd}/${mm}/${yyyy}`;
+  };
+
+  // Clean emoji characters from task names for keyword matching
+  const cleanTaskName = (name: string) =>
+    name.replace(/[\p{Extended_Pictographic}\u200d\ufe0f\u{1F3FB}-\u{1F3FF}]/gu, '').trim();
+
   // Helper: find task date by keyword match on task name (case-insensitive, ignores emojis)
   const getTaskDate = (tasks: any[], keyword: string) => {
     const task = tasks.find((t: any) => {
       if (!t.name) return false;
-      const cleanName = t.name.replace(/[\p{Extended_Pictographic}\u200d\ufe0f\u{1F3FB}-\u{1F3FF}]/gu, '').trim();
-      return cleanName.toLowerCase().includes(keyword.toLowerCase());
+      return cleanTaskName(t.name).toLowerCase().includes(keyword.toLowerCase());
     });
-    return task?.target_date ? formatDate(task.target_date) : '';
+    return task?.target_date ? formatDateUTC(task.target_date) : '';
   };
 
   // Helper: find LAST task matching keyword (for B2B vs B2C distinction)
   const getLastTaskDate = (tasks: any[], keyword: string) => {
     const matches = tasks.filter((t: any) => {
       if (!t.name) return false;
-      const cleanName = t.name.replace(/[\p{Extended_Pictographic}\u200d\ufe0f\u{1F3FB}-\u{1F3FF}]/gu, '').trim();
-      return cleanName.toLowerCase().includes(keyword.toLowerCase());
+      return cleanTaskName(t.name).toLowerCase().includes(keyword.toLowerCase());
     });
     const task = matches.length > 0 ? matches[matches.length - 1] : null;
-    return task?.target_date ? formatDate(task.target_date) : '';
+    return task?.target_date ? formatDateUTC(task.target_date) : '';
   };
 
   let allJobs: any[] = [];
