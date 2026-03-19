@@ -132,7 +132,13 @@ export async function syncLeads(client: JobManClient, limit: number | null = nul
       'If we come back with a design and price that fits this, are you happy to move forward?': '',
       'Comments on approval probability estimate': '',
       '01_Sales Person': getMemberByRole('Sales'),
-      '02_Designer': getMemberByRole('Design'),
+      '02_Designer': members
+          .filter((m: any) => {
+              const role = (m.role || '').toLowerCase();
+              return role.includes('design') && !role.includes('design manager');
+          })
+          .map((m: any) => m.name)
+          .join(', '),
       '03_Accounts Person': getMemberByRole('Account'),
       '04_ Design Manager': getMemberByRole('Design Manager'),
       'Created': formatDate(lead.created_at),
