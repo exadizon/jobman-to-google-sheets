@@ -20,6 +20,7 @@ export class JobManClient {
   public priorityCache: Map<string, string> = new Map();
   public statusCache: Map<string, string> = new Map();
   public jobMemberTypeCache: Map<string, string> = new Map();
+  public leadMemberTypeCache: Map<string, string> = new Map();
 
   constructor() {
     const apiKey = process.env.JOBMAN_API_KEY;
@@ -97,6 +98,13 @@ export class JobManClient {
         const memberTypeList = memberTypes.data || memberTypes.job_member_types?.data || memberTypes.job_member_types || [];
         memberTypeList.forEach((mt: any) => this.jobMemberTypeCache.set(String(mt.id), mt.name));
     } catch (e) { console.log('Failed to fetch job member types'); }
+
+    // Fetch Lead Member Types (maps lead_member_type_id to role name)
+    try {
+        const leadMemberTypes: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/member-types` });
+        const leadMemberTypeList = leadMemberTypes.lead_member_types?.data || leadMemberTypes.data || [];
+        leadMemberTypeList.forEach((mt: any) => this.leadMemberTypeCache.set(String(mt.id), mt.name));
+    } catch (e) { console.log('Failed to fetch lead member types'); }
   }
 
   async getQuotes(page = 1, limit = 50, trashed: 0 | 1 | undefined = 0) {
@@ -176,9 +184,16 @@ export class JobManClient {
   async getLeadMembers(leadId: string) {
       try {
           const response: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}/members` });
-          // The response might be a paginated list or a direct array depending on the API nuances,
-          // usually list endpoints return { data: [...] }
-          return response.data || response.members || [];
+          const membersData = response.lead_members?.data || response.data || response.members || [];
+          const members = [];
+          for (const m of membersData) {
+              if (m.staff_id) {
+                  const staff = await this.getStaffMember(m.staff_id);
+                  const role = this.leadMemberTypeCache.get(String(m.lead_member_type_id)) || '';
+                  members.push({ ...staff, role });
+              }
+          }
+          return members;
       } catch (e) { return []; }
   }
 
@@ -187,38 +202,9 @@ export class JobManClient {
   async getLeadSalesperson(leadId: string): Promise<string> {
       if (this.leadSalespersonCache.has(leadId)) return this.leadSalespersonCache.get(leadId)!;
       try {
-          // Try tasks first (same approach as leads sync)
-          let members: any[] = [];
-          try {
-              const tasksResponse: any = await this.request({ method: 'GET', url: `/organisations/${this.orgId}/leads/${leadId}/tasks` });
-              const tasksData = tasksResponse.tasks?.data || tasksResponse.data || tasksResponse.tasks || [];
-              if (Array.isArray(tasksData) && tasksData.length > 0) {
-                  const allMembers = tasksData.flatMap((t: any) => t.members || []);
-                  const seen = new Set<string>();
-                  for (const m of allMembers) {
-                      const id = m.staff_id || m.id;
-                      if (id && !seen.has(id)) {
-                          seen.add(id);
-                          const staff = await this.getStaffMember(id);
-                          members.push({ ...m, ...staff });
-                      }
-                  }
-              }
-          } catch (e) { /* fall through to direct members */ }
-
-          if (members.length === 0) {
-              const directMembers = await this.getLeadMembers(leadId);
-              for (const m of directMembers) {
-                  const id = m.staff_id || m.id;
-                  if (id) {
-                      const staff = await this.getStaffMember(id);
-                      members.push({ ...m, ...staff });
-                  }
-              }
-          }
-
+          const members = await this.getLeadMembers(leadId);
           const salesperson = members
-              .filter((m: any) => m.role && m.role.toLowerCase().includes('sales'))
+              .filter((m: any) => m.role === '01_Sales Person')
               .map((m: any) => m.name)
               .join(', ');
           this.leadSalespersonCache.set(leadId, salesperson);

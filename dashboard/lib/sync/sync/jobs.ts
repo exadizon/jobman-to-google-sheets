@@ -196,7 +196,13 @@ export async function syncJobs(client: JobManClient, limit: number | null = null
       'AKL Factory Staff': getMembersByRole('AKL Factory Staff'),
       'Assembly technicians': getMembersByRole('Assembly technicians'),
       'CNC Operator': getMembersByRole('CNC Operator'),
-      'Designer': getMembersByRole('Designer'),
+      'Designer': members
+          .filter((m: any) => {
+              const role = (m.role || '').toLowerCase();
+              return role.includes('design') && !role.includes('design manager');
+          })
+          .map((m: any) => m.name)
+          .join(', '),
       'Design Manager': getMembersByRole('Design Manager'),
       'Edge Bander': getMembersByRole('Edge Bander'),
       'Installer': getMembersByRole('Installer'),
